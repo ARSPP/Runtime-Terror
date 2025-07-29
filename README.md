@@ -9,7 +9,9 @@
     - Set `foursquareApiKey` to be the key to Foursquare Places API
     - Set `user` to your postgres user
     - set `password` to your postgres password
-3. Setup the database
+3. Install dependencies
+    - `npm i`
+4. Setup the database
     - `npm run setup`
-4. Start the server
+5. Start the server
     - `npm run start`
