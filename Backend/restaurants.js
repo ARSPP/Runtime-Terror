@@ -14,7 +14,7 @@ app.get('/restaurants', (req, res) => {
     }
 
     let restaurantCategoryId = '4d4b7105d754a06374d81259';
-    let apiKey = env.apiKey;
+    let apiKey = env.foursquareApiKey;
 
     console.log(`Lat: ${latitude}, Long: ${longitude}`);
     axios.get(`https://places-api.foursquare.com/places/search?ll=${latitude}%2C${longitude}&fsq_category_ids=${restaurantCategoryId}&sort=DISTANCE`, {
