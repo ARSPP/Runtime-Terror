@@ -1,3 +1,6 @@
+let userLat = null;
+let userLong = null
+
 navigator.geolocation.getCurrentPosition(
   (position) => {
     userLat = position.coords.latitude;
@@ -8,7 +11,10 @@ navigator.geolocation.getCurrentPosition(
   }
 );
 
-let restaurantQueryInput = document.getElementById("restuarantQuery");
+let restaurantQueryInput = document.getElementById("restaurantQuery");
+if(!restaurantQueryInput){
+  console.log("NULLLLL");
+}
 let queryBtn = document.getElementById("queryBtn");
 let message =  document.getElementById("message");
 
@@ -19,5 +25,14 @@ function queryRestaurants(){
         message.textContent = "Please enable location services to search for restaurants.";
         return;
     }
-    fetch(`/restuarants?lat=${userLat}&long=${userLong}`)
+    message.textContent = '';
+    let query = restaurantQueryInput.value;
+    console.log(query);
+    fetch(`/restaurants?lat=${userLat}&long=${userLong}`)
+    .then((response)=>{return response.json();})
+    .then((data)=>{
+      console.log(data);
+    }).catch((err) =>{
+      console.log(err);
+    })
 }
