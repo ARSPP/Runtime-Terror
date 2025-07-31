@@ -1,0 +1,9 @@
+DROP DATABASE IF EXISTS demo2;
+CREATE DATABASE demo2;
+\c demo2
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(100)
+);
