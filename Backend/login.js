@@ -143,4 +143,76 @@ app.get("/private", authorize, (req, res) => {
   return res.send("A private message\n");
 });
 
+// Follow a user
+app.post("/follow", authorize, async (req, res) => {
+    const { following } = req.body;
+    const follower = tokenStorage[req.cookies.token];
+
+    if (!following || follower === following) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        await pool.query(
+            "INSERT INTO follows (follower, following) VALUES ($1, $2) ON CONFLICT DO NOTHING",
+            [follower, following]
+        );
+        res.sendStatus(200);
+    } catch (error) {
+        console.log("FOLLOW FAILED", error);
+        res.sendStatus(500);
+    }
+});
+
+// Unfollow a user
+app.post("/unfollow", authorize, async (req, res) => {
+    const { following } = req.body;
+    const follower = tokenStorage[req.cookies.token];
+
+    if (!following || follower === following) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        await pool.query(
+            "DELETE FROM follows WHERE follower = $1 AND following = $2",
+            [follower, following]
+        );
+        res.sendStatus(200);
+    } catch (error) {
+        console.log("UNFOLLOW FAILED", error);
+        res.sendStatus(500);
+    }
+});
+
+// Get who the current user is following
+app.get("/following", authorize, async (req, res) => {
+    const follower = tokenStorage[req.cookies.token];
+    try {
+        const result = await pool.query(
+            "SELECT following FROM follows WHERE follower = $1",
+            [follower]
+        );
+        res.json(result.rows.map(row => row.following));
+    } catch (error) {
+        console.log("GET FOLLOWING FAILED", error);
+        res.sendStatus(500);
+    }
+});
+
+// Get followers of the current user
+app.get("/followers", authorize, async (req, res) => {
+    const following = tokenStorage[req.cookies.token];
+    try {
+        const result = await pool.query(
+            "SELECT follower FROM follows WHERE following = $1",
+            [following]
+        );
+        res.json(result.rows.map(row => row.follower));
+    } catch (error) {
+        console.log("GET FOLLOWERS FAILED", error);
+        res.sendStatus(500);
+    }
+});
+
 module.exports = app;
