@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-//const open = require('open');
+const open = require('open');
 
 const loginApp = require('./Backend/login.js');
 
@@ -17,5 +17,5 @@ app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-    //open(`http://localhost:${port}`);
+    open(`http://localhost:${port}`);
 });
