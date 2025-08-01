@@ -10,11 +10,13 @@
     <body>
         <h1>We are logged in!!</h1>
         <button id="logoutBtn">Logout</button>
+        <button id="reviewBtn">Search for a Restaurant</button>
     </body>
 
     <script src="./Login/auth.js"></script>
     <script>
         checkLoginStatus();
         document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('reviewBtn').addEventListener('click', () =>{window.location.href = '/search';});
     </script>
 </html>
