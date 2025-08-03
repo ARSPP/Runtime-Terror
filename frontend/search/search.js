@@ -45,17 +45,15 @@ function queryRestaurants() {
       data.forEach((rest) => {
         let div = document.createElement("div");
         div.classList.add("restaurantSearchResult");
+        div.style.cursor = "pointer";
         div.innerHTML = `
         <h1>${rest.name}</h1>
         <h2>${rest.location.formatted_address}</h2>`;
 
-        let btn = document.createElement("button");
-        btn.textContent = "Add to Database";
-        btn.addEventListener("click", () => {
-          addRestaurantToDB(rest);
+        div.addEventListener("click", () => {
+          addRestaurantToDBAndNavigate(rest);
         });
 
-        div.appendChild(btn);
         searchResults.appendChild(div);
       });
     })
@@ -66,7 +64,7 @@ function queryRestaurants() {
     });
 }
 
-function addRestaurantToDB(data) {
+function addRestaurantToDBAndNavigate(data) {
   fetch("/save-restaurant", {
     method: "POST",
     headers: {
@@ -79,6 +77,8 @@ function addRestaurantToDB(data) {
     })
     .then((response) => {
       console.log(response);
+      localStorage.setItem("restaurantData", JSON.stringify(data));
+      window.location.href = "/review";
     })
     .catch((error) => {
       console.log(error);
