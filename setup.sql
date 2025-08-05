@@ -7,3 +7,13 @@ CREATE TABLE users(
     username VARCHAR(50),
     password VARCHAR(100)
 );
+DROP TABLE IF EXISTS restaurants;
+CREATE TABLE restaurants(
+    id TEXT PRIMARY KEY,
+    name TEXT,
+    tel TEXT,
+    email TEXT,
+    website TEXT,
+    socials JSONB,
+    location JSONB
+)
