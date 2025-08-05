@@ -10,77 +10,11 @@
     <body>
         <h1>We are logged in!!</h1>
         <button id="logoutBtn">Logout</button>
-
-        <h2>Follow/Unfollow Users</h2>
-        <input type="text" id="searchUser" placeholder="Enter username to follow/unfollow" />
-        <button id="followBtn">Follow</button>
-        <button id="unfollowBtn">Unfollow</button>
-        <p id="followMessage"></p>
-
-        <h3>Your Following List:</h3>
-        <ul id="followingList"></ul>
     </body>
 
     <script src="./Login/auth.js"></script>
     <script>
         checkLoginStatus();
         document.getElementById('logoutBtn').addEventListener('click', logout);
-
-        document.getElementById('followBtn').addEventListener('click', async () => {
-            const username = document.getElementById('searchUser').value;
-            if (!username) {
-                document.getElementById('followMessage').textContent = "Enter a username.";
-                return;
-            }
-            const res = await fetch('/follow', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ following: username })
-            });
-            if (res.ok) {
-                document.getElementById('followMessage').textContent = `Followed ${username}!`;
-                loadFollowing();
-            } else {
-                document.getElementById('followMessage').textContent = "Failed to follow.";
-            }
-        });
-
-        document.getElementById('unfollowBtn').addEventListener('click', async () => {
-            const username = document.getElementById('searchUser').value;
-            if (!username) {
-                document.getElementById('followMessage').textContent = "Enter a username.";
-                return;
-            }
-            const res = await fetch('/unfollow', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ following: username })
-            });
-            if (res.ok) {
-                document.getElementById('followMessage').textContent = `Unfollowed ${username}!`;
-                loadFollowing();
-            } else {
-                document.getElementById('followMessage').textContent = "Failed to unfollow.";
-            }
-        });
-
-        async function loadFollowing() {
-            const res = await fetch('/following', { credentials: 'include' });
-            if (res.ok) {
-                const list = await res.json();
-                const ul = document.getElementById('followingList');
-                ul.innerHTML = '';
-                list.forEach(user => {
-                    const li = document.createElement('li');
-                    li.textContent = user;
-                    ul.appendChild(li);
-                });
-            }
-        }
-
-        // Load following list on page load
-        loadFollowing();
     </script>
 </html>
