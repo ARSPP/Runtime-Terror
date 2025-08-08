@@ -5,26 +5,67 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <link rel="stylesheet" href="styles.css">
         <script src="login.js"></script>
     </head>
-    <body>
-        <h1>We are logged in!!</h1>
-        <button id="logoutBtn">Logout</button>
-        <button id="reviewBtn">Search for a Restaurant</button>
+    <body class="account-page">
+        <div class="main-content">
+            <h1 id="welcomeHeading">Welcome!</h1>
+            <div class="welcome-message">Loading...</div>
+            
+            <button id="reviewBtn">Search for a Restaurant</button>
 
-        <h2>Follow/Unfollow Users</h2>
-        <input type="text" id="searchUser" placeholder="Enter username to follow/unfollow" />
-        <button id="followBtn">Follow</button>
-        <button id="unfollowBtn">Unfollow</button>
-        <p id="followMessage"></p>
+            <h2>Follow/Unfollow Users</h2>
+            <input type="text" id="searchUser" placeholder="Enter username to follow/unfollow" />
+            <button id="followBtn">Follow</button>
+            <button id="unfollowBtn">Unfollow</button>
+            <p id="followMessage"></p>
 
-        <h3>Your Following List:</h3>
-        <ul id="followingList"></ul>
+            <h3>Your Following List:</h3>
+            <ul id="followingList"></ul>
+
+            <button id="logoutBtn">Logout</button>
+        </div>
     </body>
 
     <script src="./Login/auth.js"></script>
     <script>
         checkLoginStatus();
+        
+        async function loadUsername() {
+            console.log('Loading username...');
+            try {
+                const response = await fetch('/current-user', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Response data:', data);
+                    const username = data.username;
+                    document.getElementById('welcomeHeading').textContent = `Welcome ${username}!`;
+                    document.querySelector('.welcome-message').style.display = 'none';
+                    console.log('Username loaded:', username);
+                } else {
+                    console.error('Failed to load username, status:', response.status);
+                    document.getElementById('welcomeHeading').textContent = 'Welcome!';
+                    document.querySelector('.welcome-message').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading username:', error);
+                document.getElementById('welcomeHeading').textContent = 'Welcome!';
+                document.querySelector('.welcome-message').style.display = 'none';
+            }
+        }
+        
+        // Wait for DOM to be ready, then load username
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUsername();
+        });
+        
         document.getElementById('logoutBtn').addEventListener('click', logout);
         document.getElementById('reviewBtn').addEventListener('click', () =>{window.location.href = '/search';});
 
