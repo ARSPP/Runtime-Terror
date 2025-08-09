@@ -142,6 +142,11 @@ app.get("/private", authorize, (req, res) => {
   return res.send("A private message\n");
 });
 
+app.get("/current-user", authorize, (req, res) => {
+  const username = tokenStorage[req.cookies.token];
+  return res.json({ username });
+});
+
 // Follow a user
 app.post("/follow", authorize, async (req, res) => {
     const { following } = req.body;
