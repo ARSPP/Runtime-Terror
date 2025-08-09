@@ -3,9 +3,8 @@ let { Pool } = require("pg");
 let argon2 = require("argon2");
 let cookieParser = require("cookie-parser");
 let crypto = require("crypto");
-let env = require("../env.json");
 
-let pool = new Pool(env);
+let pool = require('./db');
 let app = express();
 app.use(express.json());
 app.use(cookieParser());

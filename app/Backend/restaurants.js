@@ -1,10 +1,8 @@
 let express = require('express');
 let axios = require('axios');
-let { Pool } = require("pg");
-let env = require('../env.json');
 let app = express();
+let pool = require('./db');
 
-let pool = new Pool(env);
 app.use(express.json());
 
 app.get('/restaurants', (req, res) => {
@@ -17,7 +15,7 @@ app.get('/restaurants', (req, res) => {
     }
 
     let restaurantCategoryId = '4d4b7105d754a06374d81259';
-    let apiKey = env.foursquareApiKey;
+    let apiKey = process.env.FOURSQUARE_API_KEY;
     let fields = "name%2Cfsq_place_id%2Clocation%2Ctel%2Cemail%2Cwebsite%2Csocial_media";
     let url = `https://places-api.foursquare.com/places/search?ll=${latitude}%2C${longitude}&fsq_category_ids=${restaurantCategoryId}&fields=${fields}&query=${search}`;
 
