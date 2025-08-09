@@ -23,4 +23,4 @@
     - `npm run db:update`
 
 ### For Production App and Supabase DB
-`https:\\plated.dev.fly`
+`https:\\plated.fly.dev`
