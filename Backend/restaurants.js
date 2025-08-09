@@ -18,6 +18,7 @@ app.get('/restaurants', (req, res) => {
 
     let restaurantCategoryId = '4d4b7105d754a06374d81259';
     let apiKey = env.foursquareApiKey;
+
     let fields = "name%2Cfsq_place_id%2Clocation%2Ctel%2Cemail%2Cwebsite%2Csocial_media";
     let url = `https://places-api.foursquare.com/places/search?ll=${latitude}%2C${longitude}&fsq_category_ids=${restaurantCategoryId}&fields=${fields}&query=${search}`;
 
