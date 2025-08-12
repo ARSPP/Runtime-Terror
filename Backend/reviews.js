@@ -46,6 +46,8 @@ app.post("/submit-review", async (req, res) => {
     }
 });
 
+
+
 app.get("/reviews/:restaurantId", async (req, res) => {
     let { restaurantId } = req.params;
 
@@ -60,6 +62,30 @@ app.get("/reviews/:restaurantId", async (req, res) => {
     } catch (error) {
         console.error("Error fetching reviews:", error);
         return res.sendStatus(500);
+    }
+});
+
+// Get all reviews by a specific username
+app.get("/api/users/:username/reviews", async (req, res) => {
+    const { username } = req.params;
+    try {
+        const { rows } = await pool.query(
+            `SELECT id,
+                    username,
+                    restaurant_id,
+                    restaurant_name,
+                    rating,
+                    review_text,
+                    timestamp
+               FROM reviews
+              WHERE username = $1
+              ORDER BY timestamp DESC`,
+            [username]
+        );
+        res.json(rows);
+    } catch (error) {
+        console.log("GET USER REVIEWS FAILED", error);
+        res.sendStatus(500);
     }
 });
 

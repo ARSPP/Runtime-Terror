@@ -220,29 +220,7 @@ app.get("/followers", authorize, async (req, res) => {
     }
 });
 
-// Get all reviews by a specific username
-app.get("/api/users/:username/reviews", async (req, res) => {
-    const { username } = req.params;
-    try {
-        const { rows } = await pool.query(
-            `SELECT id,
-                    username,
-                    restaurant_id,
-                    restaurant_name,
-                    rating,
-                    review_text,
-                    timestamp
-               FROM reviews
-              WHERE username = $1
-              ORDER BY timestamp DESC`,
-            [username]
-        );
-        res.json(rows);
-    } catch (error) {
-        console.log("GET USER REVIEWS FAILED", error);
-        res.sendStatus(500);
-    }
-});
+
 
 
 module.exports = app;
