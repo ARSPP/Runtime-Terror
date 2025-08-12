@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Review</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
-<body>
-    <div class="container">
+<body class="review-page">
+    <div class="main-content">
         <h1>Restaurant Review</h1>
         
-        <div id="restaurantInfo">
+        <div id="restaurantInfo" class="welcome-message">
             <h2 id="restaurantName"></h2>
             <p id="restaurantAddress"></p>
         </div>
@@ -18,22 +18,18 @@
         <div id="reviewForm">
             <h3>Write a Review</h3>
             <form id="reviewFormElement">
-                <div class="form-group">
-                    <label for="rating">Rating:</label>
-                    <select id="rating" required>
-                        <option value="">Select rating</option>
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Fair</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Very Good</option>
-                        <option value="5">5 - Excellent</option>
-                    </select>
-                </div>
+                <label for="rating">Rating:</label>
+                <select id="rating" required>
+                    <option value="">Select rating</option>
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="5">5 - Excellent</option>
+                </select>
                 
-                <div class="form-group">
-                    <label for="reviewText">Review:</label>
-                    <textarea id="reviewText" rows="4" placeholder="Write your review here..." required></textarea>
-                </div>
+                <label for="reviewText">Review:</label>
+                <textarea id="reviewText" rows="4" placeholder="Write your review here..." required></textarea>
                 
                 <button type="submit">Submit Review</button>
             </form>
