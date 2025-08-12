@@ -1,9 +1,7 @@
 let express = require("express");
-let env = require("../env.json");
-let { Pool } = require("pg");
+let pool = require("./db");
 
 let app = express();
-let pool = new Pool(env);
 app.use(express.json());
 
 function validateReview(body) {

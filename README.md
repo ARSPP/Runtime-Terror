@@ -1,17 +1,26 @@
-# GroupProject_375
+# Plated
 
 ## Steps to Run
 
-1. Utilize env_sample.json instead of env.json
-    - Change line 3 in restaurant.js to `let env = require("../env_sample.json");`
-    - Change line 6 in login.js to `let env = require("../env_sample.json");`
-2. Update env_sample.json to have the correct key-value pairs
-    - Set `foursquareApiKey` to be the key to Foursquare Places API
-    - Set `user` to your postgres user
-    - set `password` to your postgres password
-3. Install dependencies
+1. Create a `.env` file based on `env.sample.txt`
+    - Add the foursquare api key to `FOURSQUARE_API_KEY`
+    - Add the direct connection supabase url to `DATABASE_URL`
+    - Add your local postgres information to `PGUSER`, `PGDATABSE`, and `PGPASSWORD`
+2. Install dependencies
     - `npm i`
-4. Setup the database
-    - `npm run setup`
-5. Start the server
-    - `npm run start`
+
+### For Local App and Local DB
+
+1. Setup local postgres db
+    - `npm run local-db:update`
+2. Run app
+    - `npm run start:local`
+
+### For Local App and Supabase DB
+1. Run app
+    - `npm run start:prod`
+2. **If needed** update schema of production database. This will erase db content.
+    - `npm run db:update`
+
+### For Production App and Supabase DB
+`https:\\plated.fly.dev`

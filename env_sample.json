@@ -1,8 +1,0 @@
-{
-    "foursquareApiKey": "",
-    "user": "",
-    "host": "localhost",
-    "database": "demo2",
-    "password": "",
-    "port": 5432
-}
