@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Follower's Reviews</title>
+  <link rel="stylesheet" href="../styles.css"/>
+</head>
+<body class="account-page">
+
+  <main class="followers-reviews-wrapper" aria-live="polite">
+    <div class="page-header">
+      <h1 id="page-title">Reviews by <span id="username">User</span></h1>
+    </div>
+
+    <div id="loading" class="spinner" aria-label="Loading"></div>
+    <div id="error" class="empty-state" style="display:none;"></div>
+    <div id="empty" class="empty-state" style="display:none;">No reviews yet.</div>
+
+    <section id="reviews" class="reviews-grid"></section>
+
+    <div class="bottom-actions">
+      <a class="btn secondary" href="../index.html">← Back to Home</a>
+      <a class="btn" href="../search/index.html">Search for Restaurant</a>
+    </div>
+  </main>
+
+  <script src="./followers-reviews.js" defer></script>
+</body>
+</html>

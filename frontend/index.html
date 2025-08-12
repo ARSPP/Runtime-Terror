@@ -117,9 +117,14 @@
                 ul.innerHTML = '';
                 list.forEach(user => {
                     const li = document.createElement('li');
-                    li.textContent = user;
+                    const a = document.createElement('a');
+                    a.href = `./followers-reviews/index.html?username=${encodeURIComponent(user)}`;
+                    a.textContent = user;
+                    a.className = 'following-user-link';
+                    li.appendChild(a);
                     ul.appendChild(li);
                 });
+
             }
         }
 

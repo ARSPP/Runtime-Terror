@@ -348,10 +348,103 @@ body.review-page #restaurantAddress a:hover {
   color: #A93226 !important; /* darker red on hover */
 }
 
-/* Optional: focus ring for accessibility */
 body.review-page #restaurantAddress a:focus {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
+}
+
+
+.muted { opacity: 0.7; font-size: 0.95em; }
+
+/* Card layout used by followers-reviews.js */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
+}
+.card .card-body { padding: 1rem 1.25rem; }
+.card .card-title {
+  margin: 0 0 .25rem 0;
+  color: var(--color-charcoal);
+  font-weight: 700;
+  font-size: 1.15em;
+}
+
+.page-header { display:flex; align-items:baseline; gap:.5rem; margin:1rem 0; }
+.reviews-grid {
+  display:grid; gap:1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+.empty-state { opacity:.7; text-align:center; padding:2rem 0; }
+.spinner {
+  margin:2rem auto; width:42px; height:42px; border-radius:50%;
+  border:4px solid rgba(0,0,0,.1); border-top-color: currentColor;
+  animation: spin .9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.followers-reviews-wrapper {
+  background: var(--color-white);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
+  max-width: 900px;
+  margin: 2em auto;
+  padding: 1.5em 1.25em;
+  border: 1px solid var(--color-soft-gray);
+}
+
+.bottom-actions {
+  display: flex;
+  justify-content: center;
+  gap: .75rem;
+  margin-top: 1.5rem;
+}
+
+a.btn {
+  display: inline-block;
+  background: var(--color-red);
+  color: var(--color-white);
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+  transition: background 0.2s, transform 0.1s ease-in-out, box-shadow 0.2s;
+}
+a.btn:hover, a.btn:focus {
+  background: #A93226;
+  box-shadow: 0 4px 14px rgba(44, 62, 80, 0.18);
+  transform: translateY(-1px);
+}
+
+a.btn.secondary {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+}
+a.btn.secondary:hover, a.btn.secondary:focus {
+  background: #C19049;
+}
+
+body.account-page {
+  background: url('../background2.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0; 
+  margin: 1.5rem 0;
+}
+
+.page-header h1 {
+  font-size: 2em;       
+  font-weight: 700;    
+  color: var(--color-charcoal);
+  text-align: center;
 }
 
 
