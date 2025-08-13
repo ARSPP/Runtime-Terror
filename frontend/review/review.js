@@ -78,7 +78,9 @@ function displayReviews(reviews) {
                     <span class="rating">${stars}</span>
                     <span class="date">${date}</span>
                 </div>
+                <div class="review-body">
                 <p class="review-text">${review.review_text}</p>
+                </div>
             </div>
         `;
     }).join("");

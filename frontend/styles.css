@@ -446,6 +446,73 @@ body.account-page {
   color: var(--color-charcoal);
   text-align: center;
 }
+/*Reviews in Feed*/
+
+.feedPage{
+    background: url('../background2.png') no-repeat center center fixed;
+}
+.review-item {
+    background: white;
+    border: 1px var(--color-soft-gray);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
+    margin: 20px;
+}
+.review-header {
+    display: flex;
+    background-color: #A93226;
+    border-radius: 12px 12px 0 0;
+    padding: 8px 12px;
+    color: white;
+    justify-content: space-between;
+}
+
+.review-username {
+  font-size: 2em;       
+  font-weight: 700;
+}
+.review-stars{
+    font-size: 2em; 
+}
+.feed-review-text {
+    color: var(--color-charcoal);
+    font-size: 1.5em;
+}
+.review-body {
+  padding: 8px 12px;  
+}
+.restaurant-review-info {
+    padding: 5px;
+    background: white;
+    border: 1px solid var(--color-soft-gray);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
+}
+.restaurant-review-info h1 {
+    margin-top: 5px;
+    margin-bottom: 5px; 
+    font-size: 1.75em;
+    text-align: left;
+}
+.restaurant-review-info h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color : #A93226;
+    text-align: left;
+}
+.restaurant-review-info h3 {
+    margin-top: 5px;   
+    margin-bottom: 5px;
+    text-align: left;
+}
+.review-footer {
+    padding: 8px 12px;
+    text-align: right;
+    background-color: gray;
+    color: white;
+    border-radius: 0 0 12px 12px;
+}
+
 
 
 /* Responsive */

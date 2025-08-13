@@ -1,6 +1,6 @@
 let feedDiv = document.getElementById("feed");
 
-getFeed();
+
 
 function getFeed() {
   getFollowing().then((followingString) => {
@@ -24,42 +24,67 @@ function getFollowing() {
     });
 }
 
-function populateFeed(following) {
+async function populateFeed(following) {
   console.log(following);
-fetch(`/reviews/following?following=${following}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("HTTP error:" + response.status);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      let reviews = "";
-      data.forEach(review => {
-        let revDiv = createReviewDiv(review);
-        reviews += revDiv;
-      });
-      feedDiv.innerHTML = reviews;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+
+  try {
+    const response = await fetch(`/reviews/following?following=${following}`);
+    if (!response.ok) {
+      throw new Error("HTTP error:" + response.status);
+    }
+    const data = await response.json();
+
+    const reviewHTMLArray = await Promise.all(
+      data.map((review) => createReviewDiv(review))
+    );
+    htmlIn = reviewHTMLArray.join("");
+    if(htmlIn.trim() != ""){
+      feedDiv.innerHTML = htmlIn;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function createReviewDiv(review){
-  console.log(review);
-        let date = new Date(review.timestamp).toLocaleDateString();
-        let stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
-        
-        return `
+async function createReviewDiv(review) {
+  let date = new Date(review.timestamp).toLocaleDateString();
+  let stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+  let restDiv = await createRestaurantDiv(review.restaurant_id);
+
+  return `
             <div class="review-item">
                 <div class="review-header">
-                    <strong>${review.username}</strong>
-                    <span class="rating">${stars}</span>
-                    <span class="date">${date}</span>
+                    <span class = "review-username">${review.username}</span>
+                    <span class = "review-stars">${stars}</span>
                 </div>
-                <p class="review-text">${review.review_text}</p>
+                <div class = "review-body">
+                <p class="feed-review-text">${review.review_text}</p>
+                ${restDiv}
+                </div>
+                <div class = "review-footer">
+                  <span>${date}</span>
+                </div>
             </div>
         `;
 }
+
+async function createRestaurantDiv(restaurant_id) {
+  try {
+    let response = await fetch(`/restaurants/${restaurant_id}`);
+    if (!response.ok) {
+      throw new Error("HTTP error: " + response.status);
+    }
+    const data = await response.json();
+
+    return `
+      <div class="restaurant-review-info">
+        <h1>${data.name}</h1>
+        <h2>${data.location.formatted_address}</h2>
+        <h3>${data.website || ''}</h3>
+      </div>`;
+  } catch (error) {
+    console.error(error);
+    return `<div class="restaurant-info error">Restaurant info unavailable</div>`;
+  }}
+
+  getFeed();
