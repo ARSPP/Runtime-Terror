@@ -33,7 +33,20 @@ app.get('/restaurants', (req, res) => {
         return res.status(err.response.status).json({error: err.response.statusText});
     });
     
-})
+});
+
+app.get('/restaurants/:id', async (req, res) =>{
+    let id = req.params.id;
+    if(!id){
+        return res.status(400).json({error : "Missing ID parameter."});
+    }
+    let query = `
+    SELECT name, location, website FROM restaurants WHERE id = $1`
+    let values = [id];
+
+    let {rows} = await pool.query(query, values);
+    res.status(200).json(rows[0]);
+});
 
 function validLocation(lat, long) {
     lat = Number(lat);
