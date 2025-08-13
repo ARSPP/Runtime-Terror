@@ -47,7 +47,7 @@ async function loadExistingReviews() {
     if (!restaurantData) return;
     
     try {
-        const response = await fetch(`/reviews/${restaurantData.fsq_place_id}`);
+        const response = await fetch(`/reviews/restaurant/${restaurantData.fsq_place_id}`);
         if (response.ok) {
             const reviews = await response.json();
             displayReviews(reviews);
