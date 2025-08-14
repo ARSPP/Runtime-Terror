@@ -34,3 +34,10 @@ CREATE TABLE reviews (
     review_text TEXT,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+DROP TABLE IF EXISTS sessions;
+CREATE TABLE sessions (
+    token VARCHAR(64) PRIMARY KEY,
+    username VARCHAR(50) REFERENCES users(username),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
