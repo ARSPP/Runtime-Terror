@@ -15,6 +15,9 @@
             
             <button id="reviewBtn">Search for a Restaurant</button>
             <button id="feedBtn">Go to your feed</button>
+            <button id="topRatedBtn" class="secondary">Top Rated</button>
+        
+
 
             <h2>Follow/Unfollow Users</h2>
             <input type="text" id="searchUser" placeholder="Enter username to follow/unfollow" />
@@ -70,6 +73,9 @@
         document.getElementById('logoutBtn').addEventListener('click', logout);
         document.getElementById('reviewBtn').addEventListener('click', () =>{window.location.href = '/search';});
         document.getElementById('feedBtn').addEventListener('click', () =>{window.location.href = '/feed';});
+        document.getElementById('topRatedBtn')?.addEventListener('click', () => {
+                location.href = './top-rated/index.html';
+             });
 
         document.getElementById('followBtn').addEventListener('click', async () => {
             const username = document.getElementById('searchUser').value;

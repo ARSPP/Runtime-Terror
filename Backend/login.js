@@ -254,6 +254,36 @@ app.get("/followers", authorize, async (req, res) => {
 });
 
 
+app.get('/api/restaurants/top-rated', async (req, res) => {
+  // For Reviews: show top 20, require at least 5 reviews
+  const minReviews = Math.max(1, parseInt(req.query.minReviews ?? '5', 10));
+  const limit = Math.max(1, parseInt(req.query.limit ?? '20', 10));
+
+  try {
+    const { rows } = await pool.query(
+      `
+      SELECT
+        r.restaurant_id,
+        COALESCE(r.restaurant_name, 'Unknown') AS restaurant_name,
+        COUNT(*) AS reviews_count,
+        ROUND(AVG(r.rating)::numeric, 2) AS avg_rating
+      FROM reviews r
+      GROUP BY r.restaurant_id, r.restaurant_name
+      HAVING COUNT(*) >= $1
+      ORDER BY avg_rating DESC, reviews_count DESC, restaurant_name ASC
+      LIMIT $2
+      `,
+      [minReviews, limit]
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error('TOP-RATED FAILED', err);
+    res.status(500).send('Failed to fetch top rated restaurants');
+  }
+});
+
+
+
 
 
 module.exports = app;
