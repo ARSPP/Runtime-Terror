@@ -47,7 +47,7 @@ async function loadExistingReviews() {
     if (!restaurantData) return;
     
     try {
-        const response = await fetch(`/reviews/${restaurantData.fsq_place_id}`);
+        const response = await fetch(`/reviews/restaurant/${restaurantData.fsq_place_id}`);
         if (response.ok) {
             const reviews = await response.json();
             displayReviews(reviews);
@@ -78,7 +78,9 @@ function displayReviews(reviews) {
                     <span class="rating">${stars}</span>
                     <span class="date">${date}</span>
                 </div>
+                <div class="review-body">
                 <p class="review-text">${review.review_text}</p>
+                </div>
             </div>
         `;
     }).join("");

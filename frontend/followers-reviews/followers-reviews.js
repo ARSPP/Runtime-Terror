@@ -15,7 +15,7 @@
 
 async function fetchReviewsByUsername(username) {
   // Backend route we’ll add below:
-  const res = await fetch(`/api/users/${encodeURIComponent(username)}/reviews`, {
+  const res = await fetch(`/reviews/user/${encodeURIComponent(username)}`, {
     headers: { "Accept": "application/json" },
     credentials: "include" // keep if you use cookie sessions; else remove
   });

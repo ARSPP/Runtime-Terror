@@ -14,6 +14,7 @@
             <div class="welcome-message">Loading...</div>
             
             <button id="reviewBtn">Search for a Restaurant</button>
+            <button id="feedBtn">Go to your feed</button>
             <button id="topRatedBtn" class="secondary">Top Rated</button>
         
 
@@ -71,6 +72,7 @@
         
         document.getElementById('logoutBtn').addEventListener('click', logout);
         document.getElementById('reviewBtn').addEventListener('click', () =>{window.location.href = '/search';});
+        document.getElementById('feedBtn').addEventListener('click', () =>{window.location.href = '/feed';});
         document.getElementById('topRatedBtn')?.addEventListener('click', () => {
                 location.href = './top-rated/index.html';
              });
