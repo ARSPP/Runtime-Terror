@@ -15,11 +15,7 @@
             
             <button id="reviewBtn">Search for a Restaurant</button>
             <button id="topRatedBtn" class="secondary">Top Rated</button>
-            <script>
-                document.getElementById('topRatedBtn')?.addEventListener('click', () => {
-                location.href = './top-rated/index.html';
-             });
-            </script>
+        
 
 
             <h2>Follow/Unfollow Users</h2>
@@ -75,6 +71,9 @@
         
         document.getElementById('logoutBtn').addEventListener('click', logout);
         document.getElementById('reviewBtn').addEventListener('click', () =>{window.location.href = '/search';});
+        document.getElementById('topRatedBtn')?.addEventListener('click', () => {
+                location.href = './top-rated/index.html';
+             });
 
         document.getElementById('followBtn').addEventListener('click', async () => {
             const username = document.getElementById('searchUser').value;
