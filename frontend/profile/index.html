@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="../styles.css">
+        
+    </head>
+    <body class="account-page">
+        <div class="main-content">
+            <div id = "nav"></div>
+            <h1 id="welcomeHeading">Welcome!</h1>
+            <div class="welcome-message">Loading...</div>
+
+            <h2>Follow/Unfollow Users</h2>
+            <input type="text" id="searchUser" placeholder="Enter username to follow/unfollow" />
+            <button id="followBtn">Follow</button>
+            <button id="unfollowBtn">Unfollow</button>
+            <p id="followMessage"></p>
+
+            <h3>Your Following List:</h3>
+            <ul id="followingList"></ul>
+
+            <button id="logoutBtn">Logout</button>
+        </div>
+        <script type = "module" src="profile.js"></script>
+    </body>
+</html>
