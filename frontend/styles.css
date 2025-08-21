@@ -94,17 +94,44 @@ h3 {
   box-shadow: 0 2px 12px rgba(179, 136, 255, 0.08);
 }
 
+/*Navbar*/
+.nav{
+    margin: 2em auto 0 auto;
+    max-width: 480px;
+    background-color: var(--color-red);
+    border-radius: 16px 16px 0 0;
+    border-bottom: 0;
+    padding: 0 2em;
+    display: flex;
+    justify-content: space-between;
+}
+.nav-logo{
+    display: block;
+    max-width: 75px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+    margin: .5em;
+}
+.navlink{
+    margin: auto 3em;
+    display: block;
+    color: var(--color-soft-gray);
+    text-decoration: none;
+}
+
+
 /* Main container */
 #loginForm,
 #searchForm,
 .main-content {
   background: var(--color-white);
-  border-radius: 16px;
+  border-radius: 0 0 16px 16px;
   box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
   max-width: 480px;
-  margin: 2em auto;
+  margin: 0 auto 2em auto;
   padding: 2em 2em 1.5em 2em;
-  border: 1px solid var(--color-soft-gray);
+  border-top: 0;
 }
 
 /* Main page layout */
@@ -561,6 +588,7 @@ body.account-page {
   #loginForm,
   #searchForm,
   .main-content,
+  .nav,
   #results {
     max-width: 95vw;
     padding: 1em;

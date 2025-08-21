@@ -4,49 +4,23 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Plated Feed</title>
+    <link rel="stylesheet" href="../styles.css" />
   </head>
-  <body class="account-page">
-    <div class="main-content">
-      <div id="nav">
-        <a
-          href="/search"
-          id = "seachlink" style="text-decoration: none; color: inherit; padding: 10px"
-          >Search</a
-        >
-        <a href="/feed" style="text-decoration: none; flex-shrink: 0">
-          <img src="../images/plated.png" alt="Plated Logo" id="logo" />
-        </a>
-        <a
-          href="/profile"
-          id = "profileLink"
-          style="text-decoration: none; color: inherit; padding: 10px"
-          >Profile</a
-        >
-      </div>
-      <h1 id="welcomeHeading">Welcome!</h1>
-      <div class="welcome-message">Loading...</div>
-
-      <button id="reviewBtn">Search for a Restaurant</button>
-      <button id="feedBtn">Go to your feed</button>
-      <button id="topRatedBtn" class="secondary">Top Rated</button>
-
-      <h2>Follow/Unfollow Users</h2>
-      <input
-        type="text"
-        id="searchUser"
-        placeholder="Enter username to follow/unfollow"
-      />
-      <button id="followBtn">Follow</button>
-      <button id="unfollowBtn">Unfollow</button>
-      <p id="followMessage"></p>
-
-      <h3>Your Following List:</h3>
-      <ul id="followingList"></ul>
-
-      <button id="logoutBtn">Logout</button>
+  <body class="feedPage">
+    <div class="nav">
+        <a href = "/search" class = "navlink">search</a>
+        <a href = "/" class = "feedLink"><img src="images/plated.png" alt="Plated Logo" class = "nav-logo"></a>
+        <a href = "/profile" class = "navlink">profile</a>
     </div>
-    <script type="module" src="main.js"></script>
+    <div class="main-content">
+      <div id="feed">
+        <h3>
+          <a href="../index.html">Friend someone</a> to see their posts here!
+        </h3>
+      </div>
+    </div>
   </body>
+
+  <script type="module" src="./feed.js"></script>
 </html>
