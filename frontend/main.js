@@ -1,4 +1,5 @@
 checkLoginStatus();
+getFeed();
 
 export async function checkLoginStatus() {
   try {
@@ -119,4 +120,4 @@ async function createRestaurantDiv(restaurant_id) {
   }
 }
 
-getFeed();
+
