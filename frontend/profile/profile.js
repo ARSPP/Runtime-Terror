@@ -1,5 +1,12 @@
 import {checkLoginStatus, logout} from "../main.js"
-import { getBanner } from "../main.js";
+
+document.getElementById("logoutBtn").addEventListener("click", logout);
+
+document.addEventListener("DOMContentLoaded", function () {
+    checkLoginStatus();
+    loadUsername();
+    loadFollowing();
+});
 
 document.getElementById("followBtn").addEventListener("click", async () => {
   const username = document.getElementById("searchUser").value;
@@ -55,7 +62,7 @@ async function loadFollowing() {
     list.forEach((user) => {
       const li = document.createElement("li");
       const a = document.createElement("a");
-      a.href = `./followers-reviews/index.html?username=${encodeURIComponent(
+      a.href = `../followers-reviews/index.html?username=${encodeURIComponent(
         user
       )}`;
       a.textContent = user;
@@ -97,11 +104,3 @@ async function loadUsername() {
   }
 }
 
-document.getElementById("logoutBtn").addEventListener("click", logout);
-
-document.addEventListener("DOMContentLoaded", function () {
-    checkLoginStatus();
-    getBanner();
-    loadUsername();
-    loadFollowing();
-});

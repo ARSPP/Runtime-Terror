@@ -9,9 +9,10 @@
 </head>
 <body class="search-page">
     <div class="nav">
-        <a href = "/search" class = "navlink">search</a>
         <a href = "/" class = "feedLink"><img src="../images/plated.png" alt="Plated Logo" class = "nav-logo"></a>
-        <a href = "/profile" class = "navlink">profile</a>
+        <a href = "/search" class = "navlink"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href = "/top-rated" class = "navlink"><i class="fa-solid fa-star"></i></a>
+        <a href = "/profile" class = "navlink"><i class="fa-solid fa-circle-user"></i></a>
     </div>
     <div id="searchForm">
         <h1>Search a Restaurant</h1>
@@ -23,10 +24,10 @@
             <button type="button" id="queryBtn">Query</button>
         </form>
         <p id="message"></p>
-        <button type="button" id="backToAccountBtn">Back to Account</button>
     </div>
     <div id="results">
     </div>
     <script type = "module" src="search.js"></script>
+    <script src="https://kit.fontawesome.com/88b6229104.js" crossorigin="anonymous"></script>
 </body>
 </html>

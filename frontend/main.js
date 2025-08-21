@@ -69,7 +69,7 @@ async function populateFeed(following) {
     const reviewHTMLArray = await Promise.all(
       data.map((review) => createReviewDiv(review))
     );
-    htmlIn = reviewHTMLArray.join("");
+    let htmlIn = reviewHTMLArray.join("");
     if (htmlIn.trim() != "") {
       feedDiv.innerHTML = htmlIn;
     }

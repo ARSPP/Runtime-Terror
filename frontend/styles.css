@@ -114,15 +114,30 @@ h3 {
     margin: .5em;
 }
 .navlink{
-    margin: auto 3em;
+    margin: auto 0;
     display: block;
     color: var(--color-soft-gray);
     text-decoration: none;
 }
+.navlink :hover{
+    text-decoration: underline 2px var(--color-gold);
+    text-underline-offset: 8px;
+}
+.fa-solid{
+    font-size: x-large;
+}
 
 
 /* Main container */
-#loginForm,
+#loginForm{
+    background: var(--color-white);
+    border-radius: 16px 16px 16px 16px;
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
+    max-width: 480px;
+    margin: 2em auto 2em auto;
+    padding: 2em 2em 1.5em 2em;
+    border-top: 0;
+}
 #searchForm,
 .main-content {
   background: var(--color-white);
@@ -528,7 +543,7 @@ body.account-page {
 }
 .review-header {
   display: flex;
-  background-color: #a93226;
+  background-color: var(--color-red);
   border-radius: 12px 12px 0 0;
   padding: 8px 12px;
   color: white;
