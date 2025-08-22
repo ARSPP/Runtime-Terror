@@ -9,6 +9,10 @@ let app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+// global object for storing tokens
+// this needs to be a DB call in the future. So log-in's are persistent
+let tokenStorage = {};
+
 pool.connect().then(() => {
   console.log("Connected to database");
 });
@@ -17,10 +21,9 @@ function makeToken() {
   return crypto.randomBytes(32).toString("hex");
 }
 
-
 let cookieOptions = {
   httpOnly: true,
-  secure: false , //THIS NEEDS TO BE TRUE IN ACTUAL APP BUT FOR LOCAL IT NEEDS TO BE FALSE
+  secure: false, //THIS NEEDS TO BE TRUE IN ACTUAL APP BUT FOR LOCAL IT NEEDS TO BE FALSE
   sameSite: "strict",
 };
 
@@ -61,15 +64,7 @@ app.post("/create", async (req, res) => {
 
   // Automatically log in after account creation
   let token = makeToken();
-  try {
-    await pool.query(
-      "INSERT INTO sessions (token, username) VALUES ($1, $2)",
-      [token, username]
-    );
-  } catch (error) {
-    console.log("SESSION INSERT FAILED", error);
-    return res.sendStatus(500);
-  }
+  tokenStorage[token] = username;
   return res.cookie("token", token, cookieOptions).send();
 });
 
@@ -113,41 +108,19 @@ app.post("/login", async (req, res) => {
 
   let token = makeToken();
   console.log("Generated token", token);
-  try {
-    await pool.query(
-      "INSERT INTO sessions (token, username) VALUES ($1, $2)",
-      [token, username]
-    );
-  } catch (error) {
-    console.log("SESSION INSERT FAILED", error);
-    return res.sendStatus(500);
-  }
+  tokenStorage[token] = username;
   return res.cookie("token", token, cookieOptions).send();
 });
 
-let authorize = async (req, res, next) => {
+let authorize = (req, res, next) => {
   let { token } = req.cookies;
-  if (token === undefined) {
+  if (token === undefined || !tokenStorage.hasOwnProperty(token)) {
     return res.sendStatus(403);
   }
-  
-  try {
-    let result = await pool.query(
-      "SELECT username FROM sessions WHERE token = $1",
-      [token]
-    );
-    if (result.rows.length === 0) {
-      return res.sendStatus(403);
-    }
-    req.username = result.rows[0].username;
-    next();
-  } catch (error) {
-    console.log("AUTHORIZE FAILED", error);
-    return res.sendStatus(500);
-  }
+  next();
 };
 
-app.post("/logout", async (req, res) => {
+app.post("/logout", (req, res) => {
   let { token } = req.cookies;
 
   if (token === undefined) {
@@ -155,19 +128,12 @@ app.post("/logout", async (req, res) => {
     return res.sendStatus(400);
   }
 
-  try {
-    let result = await pool.query(
-      "DELETE FROM sessions WHERE token = $1",
-      [token]
-    );
-    if (result.rowCount === 0) {
-      console.log("Token doesn't exist");
-      return res.sendStatus(400);
-    }
-  } catch (error) {
-    console.log("LOGOUT FAILED", error);
-    return res.sendStatus(500);
+  if (!tokenStorage.hasOwnProperty(token)) {
+    console.log("Token doesn't exist");
+    return res.sendStatus(400);
   }
+
+  delete tokenStorage[token];
 
   return res.clearCookie("token", cookieOptions).send();
 });
@@ -177,14 +143,14 @@ app.get("/private", authorize, (req, res) => {
 });
 
 app.get("/current-user", authorize, (req, res) => {
-  const username = req.username;
+  const username = tokenStorage[req.cookies.token];
   return res.json({ username });
 });
 
 // Follow a user
 app.post("/follow", authorize, async (req, res) => {
     const { following } = req.body;
-    const follower = req.username;
+    const follower = tokenStorage[req.cookies.token];
 
     if (!following || follower === following) {
         return res.sendStatus(400);
@@ -205,7 +171,7 @@ app.post("/follow", authorize, async (req, res) => {
 // Unfollow a user
 app.post("/unfollow", authorize, async (req, res) => {
     const { following } = req.body;
-    const follower = req.username;
+    const follower = tokenStorage[req.cookies.token];
 
     if (!following || follower === following) {
         return res.sendStatus(400);
@@ -225,7 +191,7 @@ app.post("/unfollow", authorize, async (req, res) => {
 
 // Get who the current user is following
 app.get("/following", authorize, async (req, res) => {
-    const follower = req.username;
+    const follower = tokenStorage[req.cookies.token];
     try {
         const result = await pool.query(
             "SELECT following FROM follows WHERE follower = $1",
@@ -240,7 +206,7 @@ app.get("/following", authorize, async (req, res) => {
 
 // Get followers of the current user
 app.get("/followers", authorize, async (req, res) => {
-    const following = req.username;
+    const following = tokenStorage[req.cookies.token];
     try {
         const result = await pool.query(
             "SELECT follower FROM follows WHERE following = $1",
@@ -252,36 +218,6 @@ app.get("/followers", authorize, async (req, res) => {
         res.sendStatus(500);
     }
 });
-
-
-app.get('/api/restaurants/top-rated', async (req, res) => {
-  // For Reviews: show top 20, require at least 5 reviews
-  const minReviews = Math.max(1, parseInt(req.query.minReviews ?? '5', 10));
-  const limit = Math.max(1, parseInt(req.query.limit ?? '20', 10));
-
-  try {
-    const { rows } = await pool.query(
-      `
-      SELECT
-        r.restaurant_id,
-        COALESCE(r.restaurant_name, 'Unknown') AS restaurant_name,
-        COUNT(*) AS reviews_count,
-        ROUND(AVG(r.rating)::numeric, 2) AS avg_rating
-      FROM reviews r
-      GROUP BY r.restaurant_id, r.restaurant_name
-      HAVING COUNT(*) >= $1
-      ORDER BY avg_rating DESC, reviews_count DESC, restaurant_name ASC
-      LIMIT $2
-      `,
-      [minReviews, limit]
-    );
-    res.json(rows);
-  } catch (err) {
-    console.error('TOP-RATED FAILED', err);
-    res.status(500).send('Failed to fetch top rated restaurants');
-  }
-});
-
 
 
 
