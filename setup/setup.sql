@@ -42,3 +42,11 @@ CREATE TABLE sessions (
     username VARCHAR(50) REFERENCES users(username),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+DROP TABLE IF EXISTS want_to_go;
+CREATE TABLE want_to_go (
+    username VARCHAR(50) REFERENCES users(username),
+    restaurant_id TEXT REFERENCES restaurants(id),
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (username, restaurant_id)
+);
