@@ -135,6 +135,14 @@ label {
     margin-bottom: 0.3em;
     display: block;
 }
+.label-gold {
+  color: var(--color-gold);
+  font-weight: 600;
+  font-size: 1.05em;
+  margin-bottom: 0.3em;
+  text-align: center;
+  display: block;
+}
 
 /* Buttons */
 button {
@@ -513,7 +521,20 @@ body.account-page {
     border-radius: 0 0 12px 12px;
 }
 
+/* Match h1 color and size for zip search label and results count */
+.zip-title, .zip-results-count {
+    color: var(--color-charcoal);
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.3em;
+    display: block;
+}
 
+/* Make the found restaurants count red */
+.zip-results-red {
+  color: var(--color-red);
+}
 
 /* Responsive */
 @media (max-width: 600px) {
@@ -534,4 +555,4 @@ body.account-page {
     .restaurantSearchResult h2 {
         font-size: 1em;
     }
-} 
+}

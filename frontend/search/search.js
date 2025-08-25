@@ -2,7 +2,7 @@ let userLat = null;
 let userLong = null;
 let queryBtn = document.getElementById("queryBtn");
 let message = document.getElementById("message");
-let searchResults = document.getElementById("results");
+let resultsContainer = document.getElementById("results");
 let backToAccountBtn = document.getElementById("backToAccountBtn");
 
 queryBtn.addEventListener("click", queryRestaurants);
@@ -29,7 +29,8 @@ navigator.geolocation.getCurrentPosition(
 let restaurantQueryInput = document.getElementById("restaurantQuery");
 
 function queryRestaurants() {
-  searchResults.innerHTML = "";
+  resultsContainer.innerHTML = ""; 
+  zipResults.innerHTML = "";
   if (!userLat || !userLong) {
     message.textContent =
       "Please enable location services to search for restaurants.";
@@ -59,7 +60,7 @@ function queryRestaurants() {
           addRestaurantToDBAndNavigate(rest);
         });
 
-        searchResults.appendChild(div);
+        resultsContainer.appendChild(div);
       });
     })
     .catch((err) => {
@@ -88,4 +89,59 @@ function addRestaurantToDBAndNavigate(data) {
     .catch((error) => {
       console.log(error);
     });
+}
+
+const zipInput = document.getElementById("zipInput");
+const zipBtn = document.getElementById("zipBtn");
+const zipResults = document.getElementById("zipResults");
+
+zipBtn?.addEventListener("click", async () => {
+  resultsContainer.innerHTML = "";
+  message.textContent = "";
+
+  const raw = (zipInput?.value || "").trim();
+  const digits = raw.replace(/\D/g, "").slice(0, 5);
+
+  if (digits.length !== 5) {
+    zipResults.innerHTML = `<p>Please enter a valid 5-digit zipcode.</p>`;
+    return;
+  }
+
+  zipResults.innerHTML = `<p>Searching…</p>`;
+  try {
+    const resp = await fetch(`/api/restaurants/by-zip/${digits}`);
+    if (!resp.ok) {
+      const e = await resp.json().catch(() => ({}));
+      throw new Error(e.error || `Request failed (${resp.status})`);
+    }
+    const data = await resp.json();
+    renderRestaurants(data.restaurants);
+  } catch (err) {
+    console.error(err);
+    zipResults.innerHTML = `<p>Sorry, something went wrong. Please try again.</p>`;
+  }
+});
+
+function renderRestaurants(list) {
+  resultsContainer.innerHTML = ""; 
+  zipResults.innerHTML = "";
+  if (!list || list.length === 0) {
+    resultsContainer.innerHTML = `<p class="muted label-gold">No restaurants found for that zipcode.</p>`;
+    return;
+  }
+  resultsContainer.innerHTML = `<p class="zip-results-count zip-results-red">Found ${list.length} restaurant(s).</p>`;
+  list.forEach((rest) => {
+    const div = document.createElement("div");
+    div.classList.add("restaurantSearchResult");
+    div.style.cursor = "pointer";
+    div.innerHTML = `
+      <h1>${rest.name}</h1>
+      <h2>${rest.location.formatted_address || rest.location.address || rest.location.postcode || ""}</h2>
+    `;
+    div.addEventListener("click", () => {
+      localStorage.setItem("restaurantData", JSON.stringify(rest));
+      window.location.href = "/review";
+    });
+    resultsContainer.appendChild(div);
+  });
 }

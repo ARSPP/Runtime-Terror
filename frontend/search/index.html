@@ -19,9 +19,19 @@
         </form>
         <p id="message"></p>
         <button type="button" id="backToAccountBtn">Back to Account</button>
+
+
+        <div id="zipSearchContainer" style="width:100%; display:flex; flex-direction:column; align-items:center; margin-top:1em;">
+            <label for="zipInput" class="zip-title">Search with zipcode</label>
+            <div style="display:flex; gap:0.5em; width:80%;">
+                <input id="zipInput" type="text" inputmode="numeric" maxlength="10" placeholder="e.g., 19123" style="flex:1;">
+                <button id="zipBtn" type="button">Search</button>
+            </div>
+        </div>
     </div>
     <div id="results">
     </div>
+    <div id="zipResults"></div>
     <script src="search.js"></script>
 </body>
 </html>
