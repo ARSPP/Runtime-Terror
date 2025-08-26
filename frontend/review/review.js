@@ -47,7 +47,7 @@ async function loadExistingReviews() {
     if (!restaurantData) return;
     
     try {
-        const response = await fetch(`/reviews/restaurant/${restaurantData.fsq_place_id}`);
+        const response = await fetch(`/reviews/restaurant/${restaurantData.fsq_place_id || restaurantData.id}`);
         if (response.ok) {
             const reviews = await response.json();
             displayReviews(reviews);
@@ -98,7 +98,7 @@ function submitReview(event) {
     }
     
     const reviewData = {
-        restaurant_id: restaurantData.fsq_place_id,
+        restaurant_id: restaurantData.fsq_place_id || restaurantData.id, 
         restaurant_name: restaurantData.name,
         rating: parseInt(rating),
         review_text: reviewText,
@@ -135,4 +135,4 @@ async function initializePage() {
     await getCurrentUser();
 }
 
-initializePage(); 
+initializePage();
