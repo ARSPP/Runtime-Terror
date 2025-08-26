@@ -74,7 +74,7 @@ app.post('/save-restaurant', async (req, res) => {
             ON CONFLICT (id) DO NOTHING
             RETURNING *;`;
     let values = [
-        restInfo.fsq_place_id,
+        restInfo.id || restInfo.fsq_place_id,
         restInfo.name,
         restInfo.email,
         restInfo.tel,

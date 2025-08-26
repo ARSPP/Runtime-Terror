@@ -70,7 +70,13 @@ function queryRestaurants() {
     });
 }
 
-function addRestaurantToDBAndNavigate(data) {
+function addRestaurantToDBAndNavigate(restaurant) {
+  const data = {
+    id: restaurant.id,
+    name: restaurant.name,
+    location: restaurant.location,
+   
+  };
   fetch("/save-restaurant", {
     method: "POST",
     headers: {
@@ -139,8 +145,7 @@ function renderRestaurants(list) {
       <h2>${rest.location.formatted_address || rest.location.address || rest.location.postcode || ""}</h2>
     `;
     div.addEventListener("click", () => {
-      localStorage.setItem("restaurantData", JSON.stringify(rest));
-      window.location.href = "/review";
+      addRestaurantToDBAndNavigate(rest);
     });
     resultsContainer.appendChild(div);
   });
