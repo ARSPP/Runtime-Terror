@@ -5,6 +5,7 @@ process.chdir(__dirname);
 const loginApp = require('./Backend/login.js');
 const restaurantsEP = require('./Backend/restaurants.js');
 const reviewsApp = require('./Backend/reviews.js');
+const wantToGoApp = require('./Backend/wantToGo.js');
 const zipRouter = require('./Backend/zipsearch.js');
 
 const app = express();
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV == "production") {
 app.use('/', restaurantsEP);
 app.use('/', loginApp);
 app.use('/', reviewsApp);
+app.use('/', wantToGoApp);
 app.use('/api/restaurants', zipRouter);
 
 app.use(express.static('frontend'));

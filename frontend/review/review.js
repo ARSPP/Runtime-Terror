@@ -4,6 +4,7 @@ let restaurantName = document.getElementById("restaurantName");
 let restaurantAddress = document.getElementById("restaurantAddress");
 let reviewForm = document.getElementById("reviewFormElement");
 let message = document.getElementById("message");
+let wantToGoCheckbox = document.getElementById("wantToGoCheckbox");
 
 async function getCurrentUser() {
     try {
@@ -128,11 +129,67 @@ function submitReview(event) {
     });
 }
 
+async function loadWantToGoStatus() {
+    if (!restaurantData || !currentUsername) return;
+    
+    try {
+        const response = await fetch(`/want-to-go-status/${restaurantData.fsq_place_id}?username=${currentUsername}`);
+        if (response.ok) {
+            const data = await response.json();
+            wantToGoCheckbox.checked = data.wantToGo;
+        }
+    } catch (error) {
+        console.error("Error loading want-to-go status:", error);
+    }
+}
+
+async function toggleWantToGo() {
+    if (!currentUsername || !restaurantData) {
+        message.textContent = "Please log in to use this feature.";
+        wantToGoCheckbox.checked = false;
+        return;
+    }
+    
+    const isChecked = wantToGoCheckbox.checked;
+    const method = isChecked ? "POST" : "DELETE";
+    
+    try {
+        const response = await fetch("/want-to-go", {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: currentUsername,
+                restaurant_id: restaurantData.fsq_place_id,
+                restaurant_name: restaurantData.name,
+                restaurant_location: restaurantData.location
+            }),
+        });
+        
+        if (!response.ok) {
+            throw new Error("Failed to update want-to-go status");
+        }
+        
+        const messageText = isChecked ? "Added to your want-to-go list!" : "Removed from your want-to-go list.";
+        message.textContent = messageText;
+        setTimeout(() => {
+            message.textContent = "";
+        }, 3000);
+    } catch (error) {
+        console.error("Error updating want-to-go status:", error);
+        message.textContent = "Error updating want-to-go status. Please try again.";
+        wantToGoCheckbox.checked = !isChecked;
+    }
+}
+
 reviewForm.addEventListener("submit", submitReview);
+wantToGoCheckbox.addEventListener("change", toggleWantToGo);
 
 async function initializePage() {
     loadRestaurantData();
     await getCurrentUser();
+    await loadWantToGoStatus();
 }
 
 initializePage();

@@ -79,6 +79,54 @@ h3 {
   letter-spacing: 0.5px;
 }
 
+.want-to-go-container {
+    margin-top: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.want-to-go-container input[type="checkbox"] {
+    display: none;
+}
+
+.want-to-go-container label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.75em 1.5em;
+    background: var(--color-white);
+    border: 2px solid var(--color-gold);
+    border-radius: 25px;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    transition: all 0.3s ease;
+}
+
+.want-to-go-container label:hover {
+    background: var(--color-gold);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 166, 90, 0.3);
+}
+
+.want-to-go-container input[type="checkbox"]:checked + label {
+    background: var(--color-gold);
+    color: var(--color-white);
+    border-color: var(--color-gold);
+}
+
+.want-to-go-container .checkmark-icon {
+    margin-right: 0.5em;
+    font-size: 1.2em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.want-to-go-container input[type="checkbox"]:checked + label .checkmark-icon {
+    opacity: 1;
+}
+
 /* Welcome message */
 .welcome-message {
   text-align: center;
