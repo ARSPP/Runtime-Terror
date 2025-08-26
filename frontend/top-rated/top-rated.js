@@ -3,7 +3,7 @@
   const minReviewsEl = document.getElementById('minReviews');
   const limitEl = document.getElementById('limit');
 
-  refreshBtn?.addEventListener('click', () => loadData());
+  refreshBtn.addEventListener('click', () => loadData());
   loadData();
 
   async function loadData() {

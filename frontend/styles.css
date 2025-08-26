@@ -1,139 +1,188 @@
 /* Color palette variables */
 :root {
-    --color-red: #C0392B;       /* Primary Red */
-    --color-charcoal: #2C3E50;  /* Charcoal */
-    --color-beige: #FDF6EC;     /* Page background */
-    --color-gold: #D4A65A;      /* Accent Gold */
-    --color-soft-gray: #E5E7EB; /* Cards / dividers */
-    --color-dark-gray: #4B4B4B; /* Body text */
-    --color-white: #FFFFFF;
+  --color-red: #c0392b; /* Primary Red */
+  --color-charcoal: #2c3e50; /* Charcoal */
+  --color-beige: #fdf6ec; /* Page background */
+  --color-gold: #d4a65a; /* Accent Gold */
+  --color-soft-gray: #e5e7eb; /* Cards / dividers */
+  --color-dark-gray: #4b4b4b; /* Body text */
+  --color-white: #ffffff;
 }
 
 /* Base page background and typography */
 body {
-    background: var(--color-beige);
-    color: var(--color-dark-gray);
-    font-family: 'Segoe UI', 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+  background: var(--color-beige);
+  color: var(--color-dark-gray);
+  font-family: "Segoe UI", "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
 /* Login page background */
 body.login-page {
-    background: url('../background1.png') no-repeat center center fixed;
-    background-size: cover;
+  background: url("../images/background1.png") no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Account page background */
 body.account-page {
-    background: url('../background2.png') no-repeat center center fixed;
-    background-size: cover;
+  background: url("../images/background2.png") no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Search page background */
 body.search-page {
-    background: url('../background3.png') no-repeat center center fixed;
-    background-size: cover;
+  background: url("../images/background3.png") no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Review page background */
 body.review-page {
-    background: url('../background4.png') no-repeat center center fixed;
-    background-size: cover;
+  background: url("../images/background4.png") no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Headings */
-h1, h2, h3 {
-    color: var(--color-charcoal);
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    text-align: center;
-    font-weight: 700;
+h1,
+h2,
+h3 {
+  color: var(--color-charcoal);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-weight: 700;
 }
 
 /* Login page heading */
 #loginForm h1 {
-    color: var(--color-charcoal);
+  color: var(--color-charcoal);
 }
 
 /* Main page headings */
-.main-content h1, .main-content h2, .main-content h3 {
-    color: var(--color-charcoal);
+.main-content h1,
+.main-content h2,
+.main-content h3 {
+  color: var(--color-charcoal);
 }
 
 /* Search page heading */
 #searchForm h1 {
-    color: var(--color-charcoal);
+  color: var(--color-charcoal);
 }
 
 /* Brand highlight */
 .brand {
-    color: var(--color-red);
-    font-weight: 700;
-    font-size: 1.1em;
-    letter-spacing: 0.5px;
+  color: var(--color-red);
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
 }
 
 /* Welcome message */
 .welcome-message {
-    text-align: center;
-    margin-top: 2em;
-    font-size: 1.25em;
-    color: #7e57c2;
-    background: #fffde7;
-    border-radius: 12px;
-    padding: 1em 0.5em;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 12px rgba(179, 136, 255, 0.08);
+  text-align: center;
+  margin-top: 2em;
+  font-size: 1.25em;
+  color: #7e57c2;
+  background: #fffde7;
+  border-radius: 12px;
+  padding: 1em 0.5em;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 12px rgba(179, 136, 255, 0.08);
 }
 
+/*Navbar*/
+.nav{
+    margin: 2em auto 0 auto;
+    max-width: 480px;
+    background-color: var(--color-red);
+    border-radius: 16px 16px 0 0;
+    border-bottom: 0;
+    padding: 0 2em;
+    display: flex;
+    justify-content: space-between;
+}
+.nav-logo{
+    display: block;
+    max-width: 75px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+    margin: .5em;
+}
+.navlink{
+    margin: auto 0;
+    display: block;
+    color: var(--color-soft-gray);
+    text-decoration: none;
+}
+.navlink :hover{
+    text-decoration: underline 2px var(--color-gold);
+    text-underline-offset: 8px;
+}
+.fa-solid{
+    font-size: x-large;
+}
+
+
 /* Main container */
-#loginForm, #searchForm, .main-content {
+#loginForm{
     background: var(--color-white);
-    border-radius: 16px;
+    border-radius: 16px 16px 16px 16px;
     box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
     max-width: 480px;
-    margin: 2em auto;
+    margin: 2em auto 2em auto;
     padding: 2em 2em 1.5em 2em;
-    border: 1px solid var(--color-soft-gray);
+    border-top: 0;
+}
+#searchForm,
+.main-content {
+  background: var(--color-white);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
+  max-width: 480px;
+  margin: 0 auto 2em auto;
+  padding: 2em 2em 1.5em 2em;
+  border-top: 0;
 }
 
 /* Main page layout */
 .main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
 }
 
 /* Search button - larger */
 #reviewBtn {
-    font-size: 1.2em;
-    padding: 0.8em 1.5em;
-    margin-bottom: 1em;
+  font-size: 1.2em;
+  padding: 0.8em 1.5em;
+  margin-bottom: 1em;
 }
 
 /* Follow/Unfollow buttons - closer together */
-#followBtn, #unfollowBtn {
-    margin: 0.3em 0.1em;
+#followBtn,
+#unfollowBtn {
+  margin: 0.3em 0.1em;
 }
 
 /* Logout button - at bottom */
 #logoutBtn {
-    order: 999;
-    margin-top: 2em;
+  order: 999;
+  margin-top: 2em;
 }
 
 /* Labels */
 label {
-    color: var(--color-charcoal);
-    font-weight: 600;
-    font-size: 1em;
-    margin-bottom: 0.3em;
-    display: block;
+  color: var(--color-charcoal);
+  font-weight: 600;
+  font-size: 1em;
+  margin-bottom: 0.3em;
+  display: block;
 }
 .label-gold {
   color: var(--color-gold);
@@ -146,202 +195,212 @@ label {
 
 /* Buttons */
 button {
-    background: var(--color-red);
-    color: var(--color-white);
-    border: none;
-    border-radius: 8px;
-    padding: 0.6em 1.2em;
-    margin: 0.3em 0.2em;
-    font-size: 1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s ease-in-out, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+  background: var(--color-red);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  margin: 0.3em 0.2em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s ease-in-out, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
 }
-button:hover, button:focus {
-    background: #A93226; /* Slightly darker red */
-    box-shadow: 0 4px 14px rgba(44, 62, 80, 0.18);
-    transform: translateY(-1px);
+button:hover,
+button:focus {
+  background: #a93226; /* Slightly darker red */
+  box-shadow: 0 4px 14px rgba(44, 62, 80, 0.18);
+  transform: translateY(-1px);
 }
 
 /* Secondary buttons (gold) */
 button.secondary {
-    background: var(--color-gold);
-    color: var(--color-charcoal);
+  background: var(--color-gold);
+  color: var(--color-charcoal);
 }
-button.secondary:hover, button.secondary:focus {
-    background: #C19049;
+button.secondary:hover,
+button.secondary:focus {
+  background: #c19049;
 }
 
 /* Inputs */
-input[type="text"], input[type="password"] {
-    width: 90%;
-    padding: 0.7em 0.8em;
-    margin: 0.5em 0 1em 0;
-    border: 1px solid var(--color-soft-gray);
-    border-radius: 6px;
-    background: var(--color-white);
-    font-size: 1em;
-    color: var(--color-dark-gray);
-    transition: border 0.2s, box-shadow 0.2s;
+input[type="text"],
+input[type="password"] {
+  width: 90%;
+  padding: 0.7em 0.8em;
+  margin: 0.5em 0 1em 0;
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 6px;
+  background: var(--color-white);
+  font-size: 1em;
+  color: var(--color-dark-gray);
+  transition: border 0.2s, box-shadow 0.2s;
 }
-input[type="text"]:focus, input[type="password"]:focus {
-    border: 1.5px solid var(--color-charcoal);
-    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.15);
-    outline: none;
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border: 1.5px solid var(--color-charcoal);
+  box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.15);
+  outline: none;
 }
 
 /* Followers List */
 #followingList {
-    background: var(--color-white);
-    border-radius: 8px;
-    padding: 1em;
-    margin: 1em auto;
-    max-width: 350px;
-    box-shadow: 0 1px 6px rgba(44, 62, 80, 0.08);
-    border: 1px solid var(--color-soft-gray);
-    list-style: none;
+  background: var(--color-white);
+  border-radius: 8px;
+  padding: 1em;
+  margin: 1em auto;
+  max-width: 350px;
+  box-shadow: 0 1px 6px rgba(44, 62, 80, 0.08);
+  border: 1px solid var(--color-soft-gray);
+  list-style: none;
 }
 #followingList li {
-    padding: 0.5em 0.8em;
-    margin: 0.3em 0;
-    border-bottom: 1px solid #ffe082;
-    font-size: 1.05em;
-    color: var(--color-gold);
-    font-weight: 600;
+  padding: 0.5em 0.8em;
+  margin: 0.3em 0;
+  border-bottom: 1px solid #ffe082;
+  font-size: 1.05em;
+  color: var(--color-gold);
+  font-weight: 600;
 }
 #followingList li:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 /* Search Bar */
-#searchForm, #query {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#searchForm,
+#query {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 #restaurantQuery {
-    width: 80%;
-    margin-bottom: 1em;
+  width: 80%;
+  margin-bottom: 1em;
 }
 
 /* Restaurant Results */
 #results {
-    margin: 2em auto;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+  margin: 2em auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 /* Individual Restaurant Result */
 .restaurantSearchResult {
-    background: var(--color-white);
-    border: 2px solid var(--color-soft-gray);
-    border-radius: 12px;
-    padding: 1.5em 2em;
-    margin-bottom: 1em;
-    font-size: 1.05em;
-    color: var(--color-dark-gray);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
-    position: relative;
+  background: var(--color-white);
+  border: 2px solid var(--color-soft-gray);
+  border-radius: 12px;
+  padding: 1.5em 2em;
+  margin-bottom: 1em;
+  font-size: 1.05em;
+  color: var(--color-dark-gray);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
+  position: relative;
 }
 
-.restaurantSearchResult:hover, .restaurantSearchResult:focus {
-    background: #fffdf7;
-    border: 2px solid var(--color-gold);
-    box-shadow: 0 6px 16px rgba(44, 62, 80, 0.18);
-    transform: translateY(-2px);
+.restaurantSearchResult:hover,
+.restaurantSearchResult:focus {
+  background: #fffdf7;
+  border: 2px solid var(--color-gold);
+  box-shadow: 0 6px 16px rgba(44, 62, 80, 0.18);
+  transform: translateY(-2px);
 }
 
 .restaurantSearchResult h1 {
-    color: var(--color-charcoal);
-    font-size: 1.25em;
-    margin: 0 0 0.5em 0;
-    text-align: left;
+  color: var(--color-charcoal);
+  font-size: 1.25em;
+  margin: 0 0 0.5em 0;
+  text-align: left;
 }
 
 .restaurantSearchResult h2 {
-    color: var(--color-dark-gray);
-    font-size: 1em;
-    margin: 0;
-    text-align: left;
-    font-weight: 500;
+  color: var(--color-dark-gray);
+  font-size: 1em;
+  margin: 0;
+  text-align: left;
+  font-weight: 500;
 }
 
 /* Legacy restaurant-result class for compatibility */
 .restaurant-result {
-    background: var(--color-white);
-    border: 1px solid var(--color-soft-gray);
-    border-radius: 10px;
-    padding: 1em 1.5em;
-    font-size: 1.05em;
-    color: var(--color-dark-gray);
-    cursor: pointer;
-    transition: background 0.2s, border 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 6px rgba(44, 62, 80, 0.09);
+  background: var(--color-white);
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 10px;
+  padding: 1em 1.5em;
+  font-size: 1.05em;
+  color: var(--color-dark-gray);
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 6px rgba(44, 62, 80, 0.09);
 }
-.restaurant-result:hover, .restaurant-result:focus {
-    background: #fffdf7;
-    border: 1px solid var(--color-gold);
-    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.16);
+.restaurant-result:hover,
+.restaurant-result:focus {
+  background: #fffdf7;
+  border: 1px solid var(--color-gold);
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.16);
 }
 .restaurant-result .review-hint {
-    font-size: 0.95em;
-    color: var(--color-gold);
-    margin-top: 0.3em;
+  font-size: 0.95em;
+  color: var(--color-gold);
+  margin-top: 0.3em;
 }
 
 /* Logo */
 .logo {
-    display: block;
-    margin: 0 auto 1.5em auto;
-    max-width: 200px;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+  display: block;
+  margin: 0 auto 1.5em auto;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
 }
 
 /* Messages */
-#message, #followMessage {
-    color: var(--color-red);
-    text-align: center;
-    margin: 0.7em 0 0.2em 0;
-    font-size: 1.05em;
+#message,
+#followMessage {
+  color: var(--color-red);
+  text-align: center;
+  margin: 0.7em 0 0.2em 0;
+  font-size: 1.05em;
 }
 
 /* Review page specific styles */
-select, textarea {
-    width: 90%;
-    padding: 0.5em;
-    margin: 0.5em 0 1em 0;
-    border: 1px solid #ffe082;
-    border-radius: 6px;
-    background: #fffbe6;
-    font-size: 1em;
-    color: #6d4c41;
-    transition: border 0.2s;
-    font-family: 'Segoe UI', 'Arial', sans-serif;
+select,
+textarea {
+  width: 90%;
+  padding: 0.5em;
+  margin: 0.5em 0 1em 0;
+  border: 1px solid #ffe082;
+  border-radius: 6px;
+  background: #fffbe6;
+  font-size: 1em;
+  color: #6d4c41;
+  transition: border 0.2s;
+  font-family: "Segoe UI", "Arial", sans-serif;
 }
 
-select:focus, textarea:focus {
-    border: var(--color-red);
-    outline: none;
+select:focus,
+textarea:focus {
+  border: var(--color-red);
+  outline: none;
 }
 
 .back-link {
-    display: inline-block;
-    margin-top: 1em;
-    color: var(--color-red);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
+  display: inline-block;
+  margin-top: 1em;
+  color: var(--color-red);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
 }
 
 .back-link:hover {
-    color:#A93226;
+  color: #a93226;
 }
 
 /* Review page: force restaurant name/address to brand red */
@@ -353,7 +412,7 @@ body.review-page #restaurantAddress a:visited {
 }
 
 body.review-page #restaurantAddress a:hover {
-  color: #A93226 !important; /* darker red on hover */
+  color: #a93226 !important; /* darker red on hover */
 }
 
 body.review-page #restaurantAddress a:focus {
@@ -361,8 +420,10 @@ body.review-page #restaurantAddress a:focus {
   outline-offset: 2px;
 }
 
-
-.muted { opacity: 0.7; font-size: 0.95em; }
+.muted {
+  opacity: 0.7;
+  font-size: 0.95em;
+}
 
 /* Card layout used by followers-reviews.js */
 .card {
@@ -371,26 +432,46 @@ body.review-page #restaurantAddress a:focus {
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
 }
-.card .card-body { padding: 1rem 1.25rem; }
+.card .card-body {
+  padding: 1rem 1.25rem;
+}
 .card .card-title {
-  margin: 0 0 .25rem 0;
+  margin: 0 0 0.25rem 0;
   color: var(--color-charcoal);
   font-weight: 700;
   font-size: 1.15em;
 }
 
-.page-header { display:flex; align-items:baseline; gap:.5rem; margin:1rem 0; }
+.page-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
 .reviews-grid {
-  display:grid; gap:1rem;
+  display: grid;
+  gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
-.empty-state { opacity:.7; text-align:center; padding:2rem 0; }
-.spinner {
-  margin:2rem auto; width:42px; height:42px; border-radius:50%;
-  border:4px solid rgba(0,0,0,.1); border-top-color: currentColor;
-  animation: spin .9s linear infinite;
+.empty-state {
+  opacity: 0.7;
+  text-align: center;
+  padding: 2rem 0;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  margin: 2rem auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: currentColor;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .followers-reviews-wrapper {
   background: var(--color-white);
@@ -405,7 +486,7 @@ body.review-page #restaurantAddress a:focus {
 .bottom-actions {
   display: flex;
   justify-content: center;
-  gap: .75rem;
+  gap: 0.75rem;
   margin-top: 1.5rem;
 }
 
@@ -421,8 +502,9 @@ a.btn {
   box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
   transition: background 0.2s, transform 0.1s ease-in-out, box-shadow 0.2s;
 }
-a.btn:hover, a.btn:focus {
-  background: #A93226;
+a.btn:hover,
+a.btn:focus {
+  background: #a93226;
   box-shadow: 0 4px 14px rgba(44, 62, 80, 0.18);
   transform: translateY(-1px);
 }
@@ -431,12 +513,13 @@ a.btn.secondary {
   background: var(--color-gold);
   color: var(--color-charcoal);
 }
-a.btn.secondary:hover, a.btn.secondary:focus {
-  background: #C19049;
+a.btn.secondary:hover,
+a.btn.secondary:focus {
+  background: #c19049;
 }
 
 body.account-page {
-  background: url('../background2.png') no-repeat center center fixed;
+  background: url("../images/background2.png") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -444,81 +527,81 @@ body.account-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0; 
+  gap: 0;
   margin: 1.5rem 0;
 }
 
 .page-header h1 {
-  font-size: 2em;       
-  font-weight: 700;    
+  font-size: 2em;
+  font-weight: 700;
   color: var(--color-charcoal);
   text-align: center;
 }
 /*Reviews in Feed*/
 
-.feedPage{
-    background: url('../background2.png') no-repeat center center fixed;
+.feedPage {
+  background: url("../images/background2.png") no-repeat center center fixed;
 }
 .review-item {
-    background: white;
-    border: 1px var(--color-soft-gray);
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
-    margin: 20px;
+  background: white;
+  border: 1px var(--color-soft-gray);
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
+  margin: 20px;
 }
 .review-header {
-    display: flex;
-    background-color: #A93226;
-    border-radius: 12px 12px 0 0;
-    padding: 8px 12px;
-    color: white;
-    justify-content: space-between;
+  display: flex;
+  background-color: var(--color-red);
+  border-radius: 12px 12px 0 0;
+  padding: 8px 12px;
+  color: white;
+  justify-content: space-between;
 }
 
 .review-username {
-  font-size: 2em;       
+  font-size: 2em;
   font-weight: 700;
 }
-.review-stars{
-    font-size: 2em; 
+.review-stars {
+  font-size: 2em;
 }
 .feed-review-text {
-    color: var(--color-charcoal);
-    font-size: 1.5em;
+  color: var(--color-charcoal);
+  font-size: 1.5em;
 }
 .review-body {
-  padding: 8px 12px;  
+  padding: 8px 12px;
 }
 .restaurant-review-info {
-    padding: 5px;
-    background: white;
-    border: 1px solid var(--color-soft-gray);
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
+  padding: 5px;
+  background: white;
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(44, 62, 80, 0.12);
 }
 .restaurant-review-info h1 {
-    margin-top: 5px;
-    margin-bottom: 5px; 
-    font-size: 1.75em;
-    text-align: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 1.75em;
+  text-align: left;
 }
 .restaurant-review-info h2 {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color : #A93226;
-    text-align: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #a93226;
+  text-align: left;
 }
 .restaurant-review-info h3 {
-    margin-top: 5px;   
-    margin-bottom: 5px;
-    text-align: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: left;
 }
 .review-footer {
-    padding: 8px 12px;
-    text-align: right;
-    background-color: gray;
-    color: white;
-    border-radius: 0 0 12px 12px;
+  padding: 8px 12px;
+  text-align: right;
+  background-color: gray;
+  color: white;
+  border-radius: 0 0 12px 12px;
 }
 
 /* Match h1 color and size for zip search label and results count */
@@ -538,21 +621,25 @@ body.account-page {
 
 /* Responsive */
 @media (max-width: 600px) {
-    #loginForm, #searchForm, .main-content, #results {
-        max-width: 95vw;
-        padding: 1em;
-    }
-    #followingList {
-        max-width: 95vw;
-    }
-    .restaurantSearchResult {
-        padding: 1em 1.5em;
-        margin-bottom: 0.8em;
-    }
-    .restaurantSearchResult h1 {
-        font-size: 1.2em;
-    }
-    .restaurantSearchResult h2 {
-        font-size: 1em;
-    }
+  #loginForm,
+  #searchForm,
+  .main-content,
+  .nav,
+  #results {
+    max-width: 95vw;
+    padding: 1em;
+  }
+  #followingList {
+    max-width: 95vw;
+  }
+  .restaurantSearchResult {
+    padding: 1em 1.5em;
+    margin-bottom: 0.8em;
+  }
+  .restaurantSearchResult h1 {
+    font-size: 1.2em;
+  }
+  .restaurantSearchResult h2 {
+    font-size: 1em;
+  }
 }

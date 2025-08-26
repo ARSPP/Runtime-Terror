@@ -6,9 +6,6 @@ let resultsContainer = document.getElementById("results");
 let backToAccountBtn = document.getElementById("backToAccountBtn");
 
 queryBtn.addEventListener("click", queryRestaurants);
-backToAccountBtn.addEventListener("click", () => {
-    window.location.href = "/";
-});
 
 queryBtn.disabled = true;
 message.textContent = "Trying to find your location.\n Make sure you have allowed location services for this site.";

@@ -1,6 +1,38 @@
+checkLoginStatus();
+getFeed();
+
+export async function checkLoginStatus() {
+  try {
+    const response = await fetch("/private", {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (response.ok) {
+    } else {
+      window.location.href = "/login";
+    }
+  } catch (error) {
+    console.error("Error checking login status:", error);
+    window.location.href = "/login";
+  }
+}
+
+export async function logout() {
+  try {
+    const response = await fetch("/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    window.location.href = "/login";
+    showMessage("Logged out successfully");
+  } catch (error) {
+    console.error("Logout error:", error);
+    showMessage("Logout error occurred");
+  }
+}
+
 let feedDiv = document.getElementById("feed");
-
-
 
 function getFeed() {
   getFollowing().then((followingString) => {
@@ -37,8 +69,8 @@ async function populateFeed(following) {
     const reviewHTMLArray = await Promise.all(
       data.map((review) => createReviewDiv(review))
     );
-    htmlIn = reviewHTMLArray.join("");
-    if(htmlIn.trim() != ""){
+    let htmlIn = reviewHTMLArray.join("");
+    if (htmlIn.trim() != "") {
       feedDiv.innerHTML = htmlIn;
     }
   } catch (error) {
@@ -80,11 +112,12 @@ async function createRestaurantDiv(restaurant_id) {
       <div class="restaurant-review-info">
         <h1>${data.name}</h1>
         <h2>${data.location.formatted_address}</h2>
-        <h3>${data.website || ''}</h3>
+        <h3>${data.website || ""}</h3>
       </div>`;
   } catch (error) {
     console.error(error);
     return `<div class="restaurant-info error">Restaurant info unavailable</div>`;
-  }}
+  }
+}
 
-  getFeed();
+
