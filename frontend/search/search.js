@@ -72,10 +72,10 @@ function queryRestaurants() {
 
 function addRestaurantToDBAndNavigate(restaurant) {
   const data = {
-    id: restaurant.id,
+    id: restaurant.id, 
+    fsq_place_id: restaurant.fsq_place_id, 
     name: restaurant.name,
     location: restaurant.location,
-   
   };
   fetch("/save-restaurant", {
     method: "POST",
@@ -84,11 +84,8 @@ function addRestaurantToDBAndNavigate(restaurant) {
     },
     body: JSON.stringify(data),
   })
+    .then((response) => response.json())
     .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      console.log(response);
       localStorage.setItem("restaurantData", JSON.stringify(data));
       window.location.href = "/review";
     })
