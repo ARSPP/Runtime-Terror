@@ -3,7 +3,7 @@
   const minReviewsEl = document.getElementById('minReviews');
   const limitEl = document.getElementById('limit');
 
-  refreshBtn?.addEventListener('click', () => loadData());
+  refreshBtn.addEventListener('click', () => loadData());
   loadData();
 
   async function loadData() {
@@ -28,33 +28,52 @@
   }
 
   function renderResults(rows) {
-    const container = document.getElementById('results');
-    container.innerHTML = '';
-    if (!rows.length) { showEmpty(true); return; }
+  const container = document.getElementById('results');
+  if (!container) return console.error('#results not found');
 
-    for (const r of rows) {
-      container.appendChild(renderCard(r));
+  container.innerHTML = '';
+
+  if (!Array.isArray(rows) || rows.length === 0) {
+    showEmpty(true);
+    return;
+  }
+
+  showEmpty(false);
+
+  rows.forEach((r, i) => {
+    const card = renderCard(r);
+    if (card && card.nodeType === 1) { 
+      container.appendChild(card);
+    } else {
+      console.warn('Skipped non-node at index', i, r);
     }
-  }
+  });
+}
 
-  function renderCard(r) {
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.innerHTML = `
-      <div class="card-body">
-        <h3 class="card-title">${escapeHtml(r.restaurant_name || 'Unnamed')}</h3>
-        <p class="muted">Average rating: <strong>${Number(r.avg_rating).toFixed(2)}</strong> (${r.reviews_count} reviews)</p>
-        ${r.restaurant_id ? `<p class="muted">ID: ${escapeHtml(r.restaurant_id)}</p>` : ''}
-      </div>
-    `;
-    div.tabIndex = 0;
-  }
+function renderCard(r) {
+  const div = document.createElement('div');
+  div.className = 'card';
+  const name = escapeHtml(r?.restaurant_name ?? 'Unnamed');
+  const avg = Number(r?.avg_rating ?? 0);
+  const count = Number(r?.reviews_count ?? 0);
+  const id = r?.restaurant_id ? escapeHtml(String(r.restaurant_id)) : '';
 
-  function escapeHtml(s) {
-    return String(s ?? '')
-      .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
-      .replaceAll('"','&quot;').replaceAll("'","&#039;");
-  }
+  div.innerHTML = `
+    <div class="card-body">
+      <h3 class="card-title">${name}</h3>
+      <p class="muted">Average rating: <strong>${avg.toFixed(2)}</strong> (${count} reviews)</p>
+      ${id ? `<p class="muted">ID: ${id}</p>` : ``}
+    </div>
+  `;
+  return div;
+}
+
+function escapeHtml(s) {
+  return String(s ?? '')
+    .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+    .replaceAll('"','&quot;').replaceAll("'","&#039;");
+}
+
 
   function showLoading(on) { document.getElementById('loading').style.display = on ? '' : 'none'; }
   function showError(msg) {

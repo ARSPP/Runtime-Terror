@@ -8,6 +8,12 @@
     <title>Search</title>
 </head>
 <body class="search-page">
+    <div class="nav">
+        <a href = "/" class = "feedLink"><img src="../images/plated.png" alt="Plated Logo" class = "nav-logo"></a>
+        <a href = "/search" class = "navlink"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href = "/top-rated" class = "navlink"><i class="fa-solid fa-star"></i></a>
+        <a href = "/profile" class = "navlink"><i class="fa-solid fa-circle-user"></i></a>
+    </div>
     <div id="searchForm">
         <h1>Search a Restaurant</h1>
         <form id="query">
@@ -18,10 +24,19 @@
             <button type="button" id="queryBtn">Query</button>
         </form>
         <p id="message"></p>
-        <button type="button" id="backToAccountBtn">Back to Account</button>
+
+        <div id="zipSearchContainer" style="width:100%; display:flex; flex-direction:column; align-items:center; margin-top:1em;">
+            <label for="zipInput" class="zip-title">Search with zipcode</label>
+            <div style="display:flex; gap:0.5em; width:80%;">
+                <input id="zipInput" type="text" inputmode="numeric" maxlength="10" placeholder="e.g., 19123" style="flex:1;">
+                <button id="zipBtn" type="button">Search</button>
+            </div>
+        </div>
     </div>
     <div id="results">
     </div>
-    <script src="search.js"></script>
+    <div id="zipResults"></div>
+    <script type = "module" src="search.js"></script>
+    <script src="https://kit.fontawesome.com/88b6229104.js" crossorigin="anonymous"></script>
 </body>
 </html>

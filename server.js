@@ -6,6 +6,7 @@ const loginApp = require('./Backend/login.js');
 const restaurantsEP = require('./Backend/restaurants.js');
 const reviewsApp = require('./Backend/reviews.js');
 const wantToGoApp = require('./Backend/wantToGo.js');
+const zipRouter = require('./Backend/zipsearch.js');
 
 const app = express();
 const port = 3000;
@@ -22,6 +23,7 @@ app.use('/', restaurantsEP);
 app.use('/', loginApp);
 app.use('/', reviewsApp);
 app.use('/', wantToGoApp);
+app.use('/api/restaurants', zipRouter);
 
 app.use(express.static('frontend'));
 

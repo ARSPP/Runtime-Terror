@@ -1,142 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src="login.js"></script>
-    </head>
-    <body class="account-page">
-        <div class="main-content">
-            <h1 id="welcomeHeading">Welcome!</h1>
-            <div class="welcome-message">Loading...</div>
-            
-            <button id="reviewBtn">Search for a Restaurant</button>
-            <button id="feedBtn">Go to your feed</button>
-            <button id="topRatedBtn" class="secondary">Top Rated</button>
-        
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plated Feed</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="feedPage">
+    <div class="nav">
+        <a href = "/" class = "feedLink"><img src="images/plated.png" alt="Plated Logo" class = "nav-logo"></a>
+        <a href = "/search" class = "navlink"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href = "/top-rated" class = "navlink"><i class="fa-solid fa-star"></i></a>
+        <a href = "/profile" class = "navlink"><i class="fa-solid fa-circle-user"></i></a>
+    </div>
+    <div class="main-content">
+      <div id="feed">
+        <h3>
+          <a href="./profile"">Friend someone</a> to see their posts here!
+        </h3>
+      </div>
+    </div>
+  </body>
 
-
-            <h2>Follow/Unfollow Users</h2>
-            <input type="text" id="searchUser" placeholder="Enter username to follow/unfollow" />
-            <button id="followBtn">Follow</button>
-            <button id="unfollowBtn">Unfollow</button>
-            <p id="followMessage"></p>
-
-            <h3>Your Following List:</h3>
-            <ul id="followingList"></ul>
-
-            <button id="logoutBtn">Logout</button>
-        </div>
-    </body>
-
-    <script src="./login/auth.js"></script>
-    <script>
-        checkLoginStatus();
-        
-        async function loadUsername() {
-            console.log('Loading username...');
-            try {
-                const response = await fetch('/current-user', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-                
-                console.log('Response status:', response.status);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Response data:', data);
-                    const username = data.username;
-                    document.getElementById('welcomeHeading').textContent = `Welcome ${username}!`;
-                    document.querySelector('.welcome-message').style.display = 'none';
-                    console.log('Username loaded:', username);
-                } else {
-                    console.error('Failed to load username, status:', response.status);
-                    document.getElementById('welcomeHeading').textContent = 'Welcome!';
-                    document.querySelector('.welcome-message').style.display = 'none';
-                }
-            } catch (error) {
-                console.error('Error loading username:', error);
-                document.getElementById('welcomeHeading').textContent = 'Welcome!';
-                document.querySelector('.welcome-message').style.display = 'none';
-            }
-        }
-        
-        // Wait for DOM to be ready, then load username
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUsername();
-        });
-        
-        document.getElementById('logoutBtn').addEventListener('click', logout);
-        document.getElementById('reviewBtn').addEventListener('click', () =>{window.location.href = '/search';});
-        document.getElementById('feedBtn').addEventListener('click', () =>{window.location.href = '/feed';});
-        document.getElementById('topRatedBtn')?.addEventListener('click', () => {
-                location.href = './top-rated/index.html';
-             });
-
-        document.getElementById('followBtn').addEventListener('click', async () => {
-            const username = document.getElementById('searchUser').value;
-            if (!username) {
-                document.getElementById('followMessage').textContent = "Enter a username.";
-                return;
-            }
-            const res = await fetch('/follow', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ following: username })
-            });
-            if (res.ok) {
-                document.getElementById('followMessage').textContent = `Followed ${username}!`;
-                loadFollowing();
-            } else {
-                document.getElementById('followMessage').textContent = "Failed to follow.";
-            }
-        });
-
-        document.getElementById('unfollowBtn').addEventListener('click', async () => {
-            const username = document.getElementById('searchUser').value;
-            if (!username) {
-                document.getElementById('followMessage').textContent = "Enter a username.";
-                return;
-            }
-            const res = await fetch('/unfollow', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ following: username })
-            });
-            if (res.ok) {
-                document.getElementById('followMessage').textContent = `Unfollowed ${username}!`;
-                loadFollowing();
-            } else {
-                document.getElementById('followMessage').textContent = "Failed to unfollow.";
-            }
-        });
-
-        async function loadFollowing() {
-            const res = await fetch('/following', { credentials: 'include' });
-            if (res.ok) {
-                const list = await res.json();
-                const ul = document.getElementById('followingList');
-                ul.innerHTML = '';
-                list.forEach(user => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.href = `./followers-reviews/index.html?username=${encodeURIComponent(user)}`;
-                    a.textContent = user;
-                    a.className = 'following-user-link';
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-
-            }
-        }
-
-        // Load following list on page load
-        loadFollowing();
-    </script>
+  <script type="module" src="./main.js"></script>
+  <script src="https://kit.fontawesome.com/88b6229104.js" crossorigin="anonymous"></script>
 </html>

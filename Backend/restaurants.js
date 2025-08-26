@@ -74,7 +74,7 @@ app.post('/save-restaurant', async (req, res) => {
             ON CONFLICT (id) DO NOTHING
             RETURNING *;`;
     let values = [
-        restInfo.fsq_place_id,
+        restInfo.id || restInfo.fsq_place_id,
         restInfo.name,
         restInfo.email,
         restInfo.tel,
@@ -97,6 +97,31 @@ app.post('/save-restaurant', async (req, res) => {
 
 })
 
+app.get('/api/restaurants/top-rated', async (req, res) => {
+    const minReviews = parseInt(req.query.minReviews) || 5;
+    const limit = parseInt(req.query.limit) || 20;
+
+    const query = `
+        SELECT 
+            restaurant_id, 
+            restaurant_name, 
+            AVG(rating) AS avg_rating, 
+            COUNT(*) AS reviews_count
+        FROM reviews
+        GROUP BY restaurant_id, restaurant_name
+        HAVING COUNT(*) >= $1
+        ORDER BY avg_rating DESC, reviews_count DESC
+        LIMIT $2
+    `;
+
+    try {
+        const { rows } = await pool.query(query, [minReviews, limit]);
+        res.json(rows);
+    } catch (error) {
+        console.error("Error fetching top rated restaurants:", error);
+        res.status(500).json({ error: "Failed to fetch top rated restaurants." });
+    }
+});
 
 
 module.exports = app;
