@@ -97,7 +97,7 @@ function submitReview(event) {
         message.textContent = "Please fill in all fields.";
         return;
     }
-    
+
     const reviewData = {
         restaurant_id: restaurantData.fsq_place_id || restaurantData.id, 
         restaurant_name: restaurantData.name,
@@ -133,7 +133,7 @@ async function loadWantToGoStatus() {
     if (!restaurantData || !currentUsername) return;
     
     try {
-        const response = await fetch(`/want-to-go-status/${restaurantData.fsq_place_id}?username=${currentUsername}`);
+        const response = await fetch(`/want-to-go-status/${restaurantData.id}?username=${currentUsername}`);
         if (response.ok) {
             const data = await response.json();
             wantToGoCheckbox.checked = data.wantToGo;
@@ -161,7 +161,7 @@ async function toggleWantToGo() {
             },
             body: JSON.stringify({
                 username: currentUsername,
-                restaurant_id: restaurantData.fsq_place_id,
+                restaurant_id: restaurantData.id,
                 restaurant_name: restaurantData.name,
                 restaurant_location: restaurantData.location
             }),
