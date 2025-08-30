@@ -56,26 +56,71 @@ function getFollowing() {
     });
 }
 
-async function populateFeed(following) {
+let currentOffset = 0;
+const REVIEWS_PER_PAGE = 15;
+
+async function populateFeed(following, append = false) {
   console.log(following);
 
   try {
-    const response = await fetch(`/reviews/following?following=${following}`);
+    // Request one extra to check if there are more results
+    const response = await fetch(
+      `/reviews/following?following=${following}&limit=${REVIEWS_PER_PAGE + 1}&offset=${currentOffset}`
+    );
     if (!response.ok) {
       throw new Error("HTTP error:" + response.status);
     }
     const data = await response.json();
 
+    // Check if there are more results than we want to display
+    let hasMore = data.length > REVIEWS_PER_PAGE;
+    let reviewsToShow = hasMore ? data.slice(0, REVIEWS_PER_PAGE) : data;
+
     const reviewHTMLArray = await Promise.all(
-      data.map((review) => createReviewDiv(review))
+      reviewsToShow.map((review) => createReviewDiv(review))
     );
     let htmlIn = reviewHTMLArray.join("");
+
     if (htmlIn.trim() != "") {
-      feedDiv.innerHTML = htmlIn;
+      if (append) {
+        feedDiv.innerHTML += htmlIn;
+      } else {
+        feedDiv.innerHTML = htmlIn;
+        currentOffset = 0;
+      }
+      currentOffset += reviewsToShow.length;
+
+      // Add or update load more button based on whether there are more results
+      updateLoadMoreButton(hasMore);
+    } else if (!append) {
+      feedDiv.innerHTML =
+        "<p>No reviews to show. Follow some users to see their reviews!</p>";
     }
   } catch (error) {
     console.error(error);
   }
+}
+
+function updateLoadMoreButton(hasMore) {
+  let loadMoreBtn = document.getElementById("loadMoreBtn");
+
+  if (hasMore) {
+    if (!loadMoreBtn) {
+      loadMoreBtn = document.createElement("button");
+      loadMoreBtn.id = "loadMoreBtn";
+      loadMoreBtn.textContent = "Load More";
+      loadMoreBtn.className = "btn secondary";
+      loadMoreBtn.onclick = loadMoreReviews;
+      feedDiv.parentNode.appendChild(loadMoreBtn);
+    }
+  } else if (loadMoreBtn) {
+    loadMoreBtn.remove();
+  }
+}
+
+async function loadMoreReviews() {
+  const following = await getFollowing();
+  await populateFeed(following, true);
 }
 
 async function createReviewDiv(review) {
@@ -119,5 +164,3 @@ async function createRestaurantDiv(restaurant_id) {
     return `<div class="restaurant-info error">Restaurant info unavailable</div>`;
   }
 }
-
-

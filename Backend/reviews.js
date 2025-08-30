@@ -79,8 +79,15 @@ app.get("/reviews/following", async (req, res) => {
   if (!req.query.following) {
     return res.status(400).json({ error: "Missing 'following' parameter" });
   }
+
   let usernames = req.query.following.split(",");
-  console.log(usernames);
+  let limit = parseInt(req.query.limit) || 15; // Default to 15 if not provided
+  let offset = parseInt(req.query.offset) || 0; // Default to 0 if not provided
+
+  console.log(
+    `Fetching reviews for users: ${usernames}, limit: ${limit}, offset: ${offset}`
+  );
+
   let query = `SELECT id,
                     username,
                     restaurant_id,
@@ -90,9 +97,10 @@ app.get("/reviews/following", async (req, res) => {
                     timestamp
                FROM reviews
               WHERE username = ANY($1::text[])
-              ORDER BY timestamp DESC`;
+              ORDER BY timestamp DESC
+              LIMIT $2 OFFSET $3`;
   try {
-    let result = await pool.query(query, [usernames]);
+    let result = await pool.query(query, [usernames, limit, offset]);
     return res.json(result.rows);
   } catch (error) {
     console.error("Error fetching reviews:", error);
@@ -116,6 +124,5 @@ app.get("/reviews/restaurant/:restaurantId", async (req, res) => {
     return res.sendStatus(500);
   }
 });
-
 
 module.exports = app;
