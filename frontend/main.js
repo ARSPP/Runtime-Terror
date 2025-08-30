@@ -57,7 +57,7 @@ function getFollowing() {
 }
 
 let currentOffset = 0;
-const REVIEWS_PER_PAGE = 15;
+const REVIEWS_PER_PAGE = 10;
 
 async function populateFeed(following, append = false) {
   console.log(following);
@@ -71,8 +71,7 @@ async function populateFeed(following, append = false) {
       throw new Error("HTTP error:" + response.status);
     }
     const data = await response.json();
-
-    // Check if there are more results than we want to display
+    
     let hasMore = data.length > REVIEWS_PER_PAGE;
     let reviewsToShow = hasMore ? data.slice(0, REVIEWS_PER_PAGE) : data;
 
@@ -90,7 +89,6 @@ async function populateFeed(following, append = false) {
       }
       currentOffset += reviewsToShow.length;
 
-      // Add or update load more button based on whether there are more results
       updateLoadMoreButton(hasMore);
     } else if (!append) {
       feedDiv.innerHTML =
