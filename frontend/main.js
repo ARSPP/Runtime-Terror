@@ -79,7 +79,7 @@ async function populateFeed(following) {
 }
 
 async function createReviewDiv(review) {
-  let date = new Date(review.timestamp).toLocaleDateString();
+  let date = new Date(review.timestamp).toLocaleString();
   let stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
   let restDiv = await createRestaurantDiv(review.restaurant_id);
 

@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS follows;
-
+DROP TABLE IF EXISTS want_to_go;
+DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS restaurants;
 DROP TABLE IF EXISTS users;
@@ -36,14 +37,14 @@ CREATE TABLE reviews (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS sessions;
+
 CREATE TABLE sessions (
     token VARCHAR(64) PRIMARY KEY,
     username VARCHAR(50) REFERENCES users(username),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS want_to_go;
+
 CREATE TABLE want_to_go (
     username VARCHAR(50) REFERENCES users(username),
     restaurant_id TEXT REFERENCES restaurants(id),

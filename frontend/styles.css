@@ -18,7 +18,11 @@ body {
   padding: 0;
   min-height: 100vh;
 }
-
+/* Feed page bg*/
+body.feedPage {
+  background: url("../images/background2.png") no-repeat center center fixed;
+  background-size: cover;
+}
 /* Login page background */
 body.login-page {
   background: url("../images/background1.png") no-repeat center center fixed;
@@ -587,9 +591,7 @@ body.account-page {
 }
 /*Reviews in Feed*/
 
-.feedPage {
-  background: url("../images/background2.png") no-repeat center center fixed;
-}
+
 .review-item {
   background: white;
   border: 1px var(--color-soft-gray);
