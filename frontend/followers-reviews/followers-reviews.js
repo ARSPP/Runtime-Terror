@@ -11,6 +11,13 @@
   fetchReviewsByUsername(username)
     .then(renderReviews)
     .catch(err => showError(err.message || "Failed to load reviews."));
+    
+  fetchWantToGoByUsername(username)
+    .then(renderWantToGo)
+    .catch(() => {
+      document.getElementById("wantToGoLoading").style.display = "none";
+      document.getElementById("wantToGoEmpty").style.display = "";
+    });
 })();
 
 async function fetchReviewsByUsername(username) {
@@ -83,4 +90,50 @@ function showError(msg) {
 function hideLoading() {
   const el = document.getElementById("loading");
   if (el) el.style.display = "none";
+}
+
+async function fetchWantToGoByUsername(username) {
+  document.getElementById("wantToGoLoading").style.display = "";
+  const res = await fetch(`/want-to-go/${encodeURIComponent(username)}`, {
+    headers: { "Accept": "application/json" },
+    credentials: "include"
+  });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    throw new Error(`Server ${res.status}: ${txt || res.statusText}`);
+  }
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+function renderWantToGo(wantToGoList) {
+  document.getElementById("wantToGoLoading").style.display = "none";
+  const list = document.getElementById("wantToGo");
+  list.innerHTML = "";
+
+  if (!wantToGoList.length) {
+    document.getElementById("wantToGoEmpty").style.display = "";
+    return;
+  }
+
+  for (const item of wantToGoList) {
+    list.appendChild(renderWantToGoCard(item));
+  }
+}
+
+function renderWantToGoCard(item) {
+  const div = document.createElement("div");
+  div.className = "card";
+  const locationText = typeof item.location === 'object' ? 
+    (item.location.formatted_address || item.location.address || JSON.stringify(item.location)) : 
+    item.location;
+  
+  div.innerHTML = `
+    <div class="card-body">
+      <h3 class="card-title">${escapeHtml(item.name ?? "Restaurant")}</h3>
+      ${locationText ? `<p class="muted">📍 ${escapeHtml(locationText)}</p>` : ""}
+      <div class="muted" style="margin-top:.5rem;">Added: ${formatDate(item.added_at)}</div>
+    </div>
+  `;
+  return div;
 }
