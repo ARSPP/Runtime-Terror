@@ -69,7 +69,7 @@ function queryRestaurants() {
 
 function addRestaurantToDBAndNavigate(restaurant) {
   const data = {
-    id: restaurant.id,
+    id: restaurant.id || restaurant.fsq_place_id,  
     name: restaurant.name,
     location: restaurant.location,
    
