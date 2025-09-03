@@ -55,6 +55,29 @@ app.delete("/want-to-go", async (req, res) => {
   }
 });
 
+app.get("/want-to-go/feed", async (req, res) => {
+  if (!req.query.following) {
+    return res.status(400).json({ error: "Missing 'following' parameter" });
+  }
+  
+  let usernames = req.query.following.split(",");
+  
+  let query = `SELECT w.username, w.restaurant_id, w.added_at, 
+                      r.name as restaurant_name, r.location, r.website
+               FROM want_to_go w
+               JOIN restaurants r ON w.restaurant_id = r.id
+               WHERE w.username = ANY($1::text[])
+               ORDER BY w.added_at DESC`;
+  
+  try {
+    let result = await pool.query(query, [usernames]);
+    return res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching friends' want-to-go:", error);
+    return res.status(500).json({ error: "Failed to fetch want-to-go feed" });
+  }
+});
+
 app.get("/want-to-go/:username", async (req, res) => {
   let { username } = req.params;
 
@@ -90,29 +113,6 @@ app.get("/want-to-go-status/:restaurantId", async (req, res) => {
   } catch (error) {
     console.error("Error checking want-to-go status:", error);
     return res.status(500).json({ error: "Failed to check want-to-go status" });
-  }
-});
-
-app.get("/want-to-go/feed", async (req, res) => {
-  if (!req.query.following) {
-    return res.status(400).json({ error: "Missing 'following' parameter" });
-  }
-  
-  let usernames = req.query.following.split(",");
-  
-  let query = `SELECT w.username, w.restaurant_id, w.added_at, 
-                      r.name as restaurant_name, r.location, r.website
-               FROM want_to_go w
-               JOIN restaurants r ON w.restaurant_id = r.id
-               WHERE w.username = ANY($1::text[])
-               ORDER BY w.added_at DESC`;
-  
-  try {
-    let result = await pool.query(query, [usernames]);
-    return res.json(result.rows);
-  } catch (error) {
-    console.error("Error fetching friends' want-to-go:", error);
-    return res.status(500).json({ error: "Failed to fetch want-to-go feed" });
   }
 });
 
