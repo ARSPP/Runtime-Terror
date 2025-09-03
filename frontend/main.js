@@ -56,12 +56,15 @@ function getFollowing() {
     });
 }
 
-async function populateFeed(following) {
+let currentOffset = 0;
+const REVIEWS_PER_PAGE = 10;
+
+async function populateFeed(following, append = false) {
   console.log(following);
 
   try {
     const [reviewsResponse, wantToGoResponse] = await Promise.all([
-      fetch(`/reviews/following?following=${following}`),
+      fetch(`/reviews/following?following=${following}&limit=${REVIEWS_PER_PAGE + 1}&offset=${currentOffset}`),
       fetch(`/want-to-go/feed?following=${following}`)
     ]);
 
@@ -72,16 +75,19 @@ async function populateFeed(following) {
     const reviewsData = await reviewsResponse.json();
     const wantToGoData = wantToGoResponse.ok ? await wantToGoResponse.json() : [];
 
+    let hasMore = data.length > REVIEWS_PER_PAGE;
+    let reviewsToShow = hasMore ? data.slice(0, REVIEWS_PER_PAGE) : reviewsData;
+
     // Create HTML for reviews
     const reviewHTMLArray = await Promise.all(
-      reviewsData.map((review) => createReviewDiv(review))
+      reviewsToShow.map((review) => createReviewDiv(review))
     );
     const wantToGoHTMLArray = await Promise.all(
       wantToGoData.map((item) => createWantToGoDiv(item))
     );
 
     const allItems = [
-      ...reviewsData.map((r, i) => ({ html: reviewHTMLArray[i], timestamp: r.timestamp, type: 'review' })),
+      ...reviewsToShow.map((r, i) => ({ html: reviewHTMLArray[i], timestamp: r.timestamp, type: 'review' })),
       ...wantToGoData.map((w, i) => ({ html: wantToGoHTMLArray[i], timestamp: w.added_at, type: 'wantToGo' }))
     ];
 
@@ -89,11 +95,44 @@ async function populateFeed(following) {
 
     let htmlIn = allItems.map(item => item.html).join("");
     if (htmlIn.trim() != "") {
-      feedDiv.innerHTML = htmlIn;
+      if (append) {
+        feedDiv.innerHTML += htmlIn;
+      } else {
+        feedDiv.innerHTML = htmlIn;
+        currentOffset = 0;
+      }
+      currentOffset += reviewsToShow.length;
+
+      updateLoadMoreButton(hasMore);
+    } else if (!append) {
+      feedDiv.innerHTML =
+        "<p>No reviews to show. Follow some users to see their reviews!</p>";
     }
   } catch (error) {
     console.error(error);
   }
+}
+
+function updateLoadMoreButton(hasMore) {
+  let loadMoreBtn = document.getElementById("loadMoreBtn");
+
+  if (hasMore) {
+    if (!loadMoreBtn) {
+      loadMoreBtn = document.createElement("button");
+      loadMoreBtn.id = "loadMoreBtn";
+      loadMoreBtn.textContent = "Load More";
+      loadMoreBtn.className = "btn secondary";
+      loadMoreBtn.onclick = loadMoreReviews;
+      feedDiv.parentNode.appendChild(loadMoreBtn);
+    }
+  } else if (loadMoreBtn) {
+    loadMoreBtn.remove();
+  }
+}
+
+async function loadMoreReviews() {
+  const following = await getFollowing();
+  await populateFeed(following, true);
 }
 
 async function createReviewDiv(review) {
