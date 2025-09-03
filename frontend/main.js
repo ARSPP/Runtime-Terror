@@ -76,7 +76,7 @@ async function populateFeed(following, append = false) {
     const wantToGoData = wantToGoResponse.ok ? await wantToGoResponse.json() : [];
 
     let hasMore = reviewsData.length > REVIEWS_PER_PAGE;
-    let reviewsToShow = hasMore ? data.slice(0, REVIEWS_PER_PAGE) : reviewsData;
+    let reviewsToShow = hasMore ? reviewsData.slice(0, REVIEWS_PER_PAGE) : reviewsData;
 
     // Create HTML for reviews
     const reviewHTMLArray = await Promise.all(
