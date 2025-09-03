@@ -60,16 +60,34 @@ async function populateFeed(following) {
   console.log(following);
 
   try {
-    const response = await fetch(`/reviews/following?following=${following}`);
-    if (!response.ok) {
-      throw new Error("HTTP error:" + response.status);
-    }
-    const data = await response.json();
+    const [reviewsResponse, wantToGoResponse] = await Promise.all([
+      fetch(`/reviews/following?following=${following}`),
+      fetch(`/want-to-go/feed?following=${following}`)
+    ]);
 
+    if (!reviewsResponse.ok) {
+      throw new Error("HTTP error:" + reviewsResponse.status);
+    }
+
+    const reviewsData = await reviewsResponse.json();
+    const wantToGoData = wantToGoResponse.ok ? await wantToGoResponse.json() : [];
+
+    // Create HTML for reviews
     const reviewHTMLArray = await Promise.all(
-      data.map((review) => createReviewDiv(review))
+      reviewsData.map((review) => createReviewDiv(review))
     );
-    let htmlIn = reviewHTMLArray.join("");
+    const wantToGoHTMLArray = await Promise.all(
+      wantToGoData.map((item) => createWantToGoDiv(item))
+    );
+
+    const allItems = [
+      ...reviewsData.map((r, i) => ({ html: reviewHTMLArray[i], timestamp: r.timestamp, type: 'review' })),
+      ...wantToGoData.map((w, i) => ({ html: wantToGoHTMLArray[i], timestamp: w.added_at, type: 'wantToGo' }))
+    ];
+
+    allItems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    let htmlIn = allItems.map(item => item.html).join("");
     if (htmlIn.trim() != "") {
       feedDiv.innerHTML = htmlIn;
     }
@@ -118,6 +136,32 @@ async function createRestaurantDiv(restaurant_id) {
     console.error(error);
     return `<div class="restaurant-info error">Restaurant info unavailable</div>`;
   }
+}
+
+async function createWantToGoDiv(item) {
+  let date = new Date(item.added_at).toLocaleDateString();
+  const locationText = typeof item.location === 'object' ? 
+    (item.location?.formatted_address || item.location?.address || '') : 
+    (item.location || '');
+  
+  return `
+    <div class="review-item">
+      <div class="review-header">
+        <span class="review-username">${item.username}</span>
+        <span class="want-to-go-badge">📍 Wants to go</span>
+      </div>
+      <div class="review-body">
+        <div class="restaurant-review-info">
+          <h1>${item.restaurant_name || "Restaurant"}</h1>
+          <h2>${locationText}</h2>
+          <h3>${item.website || ""}</h3>
+        </div>
+      </div>
+      <div class="review-footer">
+        <span>${date}</span>
+      </div>
+    </div>
+  `;
 }
 
 
